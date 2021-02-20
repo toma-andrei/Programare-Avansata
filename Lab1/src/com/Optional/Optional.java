@@ -1,4 +1,5 @@
 package com.Optional;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;/*pentru Arrays.fill()*/
 import java.util.Scanner;/*pentru a citi date de la tastatura*/
@@ -19,7 +20,9 @@ class Optional {
  * https://stackoverflow.com/questions/27455742/array-index-out-of-bounds-exception-0
  * https://www.techiedelight.com/measure-elapsed-time-execution-time-java/ */
 
-    public void connectedComponents(int adjencyMatrix[][], int n, int startNode) { //
+    boolean isConnected = false;
+
+    public void connectedComponents(int adjacencyMatrix[][], int n, int startNode) { //
 
         int verified[] = new int[n]; // noduri vizitate pe fiecare componenta conexa in parte
         int globalVerified[] = new int[n]; // reuniunea nodurilor fiecarei componente conexe
@@ -43,7 +46,7 @@ class Optional {
                 queue.remove(0);
 
                 for (int i = 0; i < n; i++) {
-                    if (adjencyMatrix[visitedNow][i] == 1 && (verified[i] == 0)) {
+                    if (adjacencyMatrix[visitedNow][i] == 1 && (verified[i] == 0)) {
                         queue.add(i);
                         verified[i] = 1; // marcheaza ca nodul i a fost vizitat.
                     }
@@ -77,6 +80,7 @@ class Optional {
             /* Daca graful este conex(au fost vizitate toate nodurile si numarul de comp. conexe este 1), afiseaza mesajul.*/
             if(!stillExistsComponents && (compNumber == 1)){
                 System.out.println("Graph is connected!");
+                isConnected = true;
                 break;
             }
             else if (stillExistsComponents) {
@@ -114,6 +118,47 @@ class Optional {
         }
     }
 
+    public void spanningTree(int [][]adjacencyMatrix, int n) {
+        if (!isConnected) {
+            System.out.println("Graph isn't connected!");
+            return;
+        }
+
+        ArrayList<Integer> queue = new ArrayList<>();
+        queue.add(0);
+
+        int verified[] = new int[n];
+
+        int spanningTreeAdjMatrix[][] = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(spanningTreeAdjMatrix[i], 0);
+        }
+
+        Arrays.fill(verified, 0);
+
+        while (!queue.isEmpty()) { /* while care face un BFS */
+            int visitedNow = queue.get(0);
+            queue.remove(0);
+
+            for (int i = 0; i < n; i++) {
+                if (adjacencyMatrix[visitedNow][i] == 1 && (verified[i] == 0)) {
+                    queue.add(i);
+                    spanningTreeAdjMatrix[visitedNow][i] = 1;
+                    spanningTreeAdjMatrix[i][visitedNow] = 1;
+                    verified[i] = 1; // marcheaza ca nodul i a fost vizitat.
+                }
+            }
+        }
+        System.out.println("Spanning tree adjacency matrix: ");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(spanningTreeAdjMatrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
     public static void main(String[] argv){
 
         Scanner scan = new Scanner(System.in);
@@ -129,7 +174,7 @@ class Optional {
         }
 
         //declararea matricei de adiacenta
-        int [][]adjencyMatrix = new int [n][n];
+        int [][]adjacencyMatrix = new int [n][n];
         long startTime = System.nanoTime();
         //umplerea matricei cu metoda Math.random();
         for(int i = 0; i < n; i++){
@@ -143,8 +188,8 @@ class Optional {
                 }
 
                 if(j > i){
-                    adjencyMatrix[i][j] = value;
-                    adjencyMatrix[j][i] = value;
+                    adjacencyMatrix[i][j] = value;
+                    adjacencyMatrix[j][i] = value;
                 }
             }
         }
@@ -153,7 +198,7 @@ class Optional {
         if(n <= 500) {
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
-                    System.out.print(adjencyMatrix[i][j] + " ");
+                    System.out.print(adjacencyMatrix[i][j] + " ");
                 }
                 System.out.println();
             }
@@ -162,7 +207,12 @@ class Optional {
         /*instanta a clasei Optional (/ obiect)*/
         Optional graph = new Optional();
         /*apeleaza metoda care gaseste componentele conexe. Primeste ca argumente matricea de adiacenta, numarul de noduri si nodul de start pentru BFS*/
-        graph.connectedComponents(adjencyMatrix, n, 0);
+        graph.connectedComponents(adjacencyMatrix, n, 0);
+
+        System.out.println();
+
+        graph.spanningTree(adjacencyMatrix, n);
+
         long endTime = System.nanoTime();
 
         System.out.println("Time elapsed during program execution: " + (endTime - startTime) + " nanoseconds!");

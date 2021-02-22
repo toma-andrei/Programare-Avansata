@@ -8,15 +8,15 @@ public abstract class Source extends Object {
 //variabilele sunt private, accesarea lor facandu-se prin settere si gettere (incapsulare)
 //constantele se scriu cu litere mari
 
-    private final String NAME;
-    private final String TYPE;
+    private final String name;
+    private final String type;
     private int capacity;
 
     //Constructor parametrizat. Este apelat cand e creata o noua instanta a clasei.
     public Source(String name, String type, int capacity) {
-        this.NAME = name;
+        this.name = name;
         this.capacity = capacity;
-        this.TYPE = type;
+        this.type = type;
     }
 
     //settere si gettere pentru variabilele private (verbe scris in camelCase).
@@ -26,13 +26,13 @@ public abstract class Source extends Object {
     }
 
     public String getName() {
-        return this.NAME;
+        return this.name;
     }
 
     public String getSourceType() {
         //returneaza concatenarea intre sirul vid si tipul sursei.
         // Nu am gasit alta metoda de a face string dintr-o constanta a unui enum.
-        return "" + TYPE;
+        return "" + type;
     }
 
     void setCapacity(int newCapacity) {
@@ -44,7 +44,7 @@ public abstract class Source extends Object {
     //                                                              dar functionalitate diferita)
 
     public String toString() {
-        return NAME + " (" + TYPE + ") " + " supplies " + capacity;
+        return name + " (" + type + ") " + " supplies " + capacity;
     }
 
     @Override
@@ -68,7 +68,7 @@ public abstract class Source extends Object {
         Source verify = (Source) newObject;
 
         //Verifica daca cele doua instante
-        if(verify.getName() == NAME && verify.getCapacity() == capacity)
+        if(verify.getName() == name && verify.getCapacity() == capacity)
             return true;
         else return false;
     }

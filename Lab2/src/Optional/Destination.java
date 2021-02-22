@@ -1,20 +1,18 @@
 package Optional;
 
-import java.util.Objects;
-
 public class Destination extends Object {
     //similar ca la clasa Source.
 
-    private final String NAME;
+    private final String name;
     private int demand;
 
     public Destination(String name,  int demand) {
-        this.NAME = name;
+        this.name = name;
         this.demand = demand;
     }
 
     public String getName() {
-        return NAME;
+        return name;
     }
 
     public int getDemand() {
@@ -26,7 +24,7 @@ public class Destination extends Object {
     }
 
     public String toString() {
-        return NAME  + " demands " + demand;
+        return name + " demands " + demand;
     }
 
     @Override
@@ -42,7 +40,7 @@ public class Destination extends Object {
         Destination verify = (Destination) newDest;
 
 
-        if(verify.getName() == NAME && verify.getDemand() == demand)
+        if(verify.getName() == name && verify.getDemand() == demand)
             return true;
         else return false;
     }

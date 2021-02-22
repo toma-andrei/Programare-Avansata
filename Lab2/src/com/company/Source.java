@@ -8,15 +8,15 @@ public class Source extends Object {
 //variabilele sunt private, accesarea lor facandu-se prin settere si gettere (incapsulare)
 //constantele se scriu cu litere mari
 
-    private final String NAME;
-    private final SourceType TYPE;
+    private final String name;
+    private final SourceType type;
     private int capacity;
 
     //Constructor parametrizat. Este apelat cand e creata o noua instanta a clasei.
     public Source(String name, SourceType type, int capacity) {
-        this.NAME = name;
+        this.name = name;
         this.capacity = capacity;
-        this.TYPE = type;
+        this.type = type;
     }
 
     //settere si gettere pentru variabilele private (verbe scris in camelCase).
@@ -26,13 +26,13 @@ public class Source extends Object {
     }
 
     public String getName() {
-        return this.NAME;
+        return this.name;
     }
 
     public String getSourceType() {
         //returneaza concatenarea intre sirul vid si tipul sursei.
         // Nu am gasit alta metoda de a face string dintr-o constanta a unui enum.
-        return "" + TYPE;
+        return "" + type;
     }
 
     void setCapacity(int newCapacity) {
@@ -43,7 +43,7 @@ public class Source extends Object {
     //metoda "toString()" suprascrie metoda toString() din clasa Object (au acelasi nume si aceiasi parametri
     //                                                              dar functionalitate diferita)
     public String toString() {
-        return NAME + " (" + TYPE + ") " + " supplies " + capacity;
+        return name + " (" + type + ") " + " supplies " + capacity;
     }
 
 }

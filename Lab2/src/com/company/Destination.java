@@ -3,22 +3,22 @@ package com.company;
 public class Destination extends Object {
     //similar ca la clasa Source.
 
-    private final String NAME;
-    private final DestinationType TYPE;
+    private final String name;
+    private final DestinationType type;
     private int demand;
 
     public Destination(String name, DestinationType type, int demand) {
-        this.NAME = name;
+        this.name = name;
         this.demand = demand;
-        this.TYPE = type;
+        this.type = type;
     }
 
     public String getName() {
-        return NAME;
+        return name;
     }
 
     public String getDestinationType() {
-        return "" + TYPE;
+        return "" + type;
     }
 
     public int getDemand() {
@@ -30,11 +30,11 @@ public class Destination extends Object {
     }
 
     public DestinationType getType() {
-        return this.TYPE;
+        return this.type;
     }
 
     public String toString() {
-        return NAME + " (" + TYPE + ") " + "demands " + demand;
+        return name + " (" + type + ") " + "demands " + demand;
     }
 
 

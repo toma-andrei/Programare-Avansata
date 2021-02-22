@@ -6,6 +6,8 @@ public class Source extends Object {
      */
 
 //variabilele sunt private, accesarea lor facandu-se prin settere si gettere (incapsulare)
+//constantele se scriu cu litere mari
+
     private final String NAME;
     private final SourceType TYPE;
     private int capacity;
@@ -17,7 +19,7 @@ public class Source extends Object {
         this.TYPE = type;
     }
 
-    //settere si gettere pentru variabilele private.
+    //settere si gettere pentru variabilele private (verbe scris in camelCase).
 
     int getCapacity() {
         return capacity;

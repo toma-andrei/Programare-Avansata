@@ -18,6 +18,7 @@ public class Main extends Object {
         };
 
         //creaza 3 instante ale sursei fiecare cu numele, tipul si capacitatea ei
+        //              (apeleaza constructorul clasei Source cu acei parametri).
         Source s1 = new Source("Coca-Cola Iasi", SourceType.FACTORY, 10);
         Source s2 = new Source("Coca-cola Cluj", SourceType.WAREHOUSE, 35);
         Source s3 = new Source("Coca-Cola Brasov", SourceType.WAREHOUSE, 25);

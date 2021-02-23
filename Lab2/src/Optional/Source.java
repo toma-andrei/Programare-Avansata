@@ -6,7 +6,6 @@ public abstract class Source extends Object {
      */
 
 //variabilele sunt private, accesarea lor facandu-se prin settere si gettere (incapsulare)
-//constantele se scriu cu litere mari
 
     private final String name;
     private final String type;
@@ -21,7 +20,8 @@ public abstract class Source extends Object {
 
     //settere si gettere pentru variabilele private (verbe scris in camelCase).
 
-    int getCapacity() {
+
+    public int getCapacity() {
         return capacity;
     }
 
@@ -30,9 +30,8 @@ public abstract class Source extends Object {
     }
 
     public String getSourceType() {
-        //returneaza concatenarea intre sirul vid si tipul sursei.
-        // Nu am gasit alta metoda de a face string dintr-o constanta a unui enum.
-        return "" + type;
+        //returneaza concatenarea intre sirul vid si tipul sursei;
+       return type;
     }
 
     void setCapacity(int newCapacity) {
@@ -50,9 +49,11 @@ public abstract class Source extends Object {
     @Override
     public boolean equals(Object newObject){
         //verifica daca ambele obiecte fac referire la acelasi obiect. (ex : o.equals(o));
+
         if(this == newObject){
             return true;
         }
+
         /*metoda getClass() a clasei Class returneaza o instanta a clasei Class care contine informatii
         *   despre clasa Source (clasa din care a fost apelata metoda getClass()).
         * if-ul urmator verifica daca metoda getClass() returneaza aceeasi instanta atat pentru clasa curenta cand si
@@ -67,7 +68,7 @@ public abstract class Source extends Object {
         *       care pot fi folosite de o anumita instanta.)."*/
         Source verify = (Source) newObject;
 
-        //Verifica daca cele doua instante
+        //Verifica daca cele doua instante au variabilele egale.
         if(verify.getName() == name && verify.getCapacity() == capacity)
             return true;
         else return false;

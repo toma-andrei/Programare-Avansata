@@ -1,6 +1,7 @@
 package Optional;
 
 public class Destination extends Object {
+
     //similar ca la clasa Source.
 
     private final String name;

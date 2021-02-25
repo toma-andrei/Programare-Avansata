@@ -8,14 +8,12 @@ public abstract class Source extends Object {
 //variabilele sunt private, accesarea lor facandu-se prin settere si gettere (incapsulare)
 
     private final String name;
-    private final String type;
     private int capacity;
 
     //Constructor parametrizat. Este apelat cand e creata o noua instanta a clasei.
-    public Source(String name, String type, int capacity) {
+    public Source(String name, int capacity) {
         this.name = name;
         this.capacity = capacity;
-        this.type = type;
     }
 
     //settere si gettere pentru variabilele private (verbe scris in camelCase).
@@ -29,10 +27,6 @@ public abstract class Source extends Object {
         return this.name;
     }
 
-    public String getSourceType() {
-        //returneaza concatenarea intre sirul vid si tipul sursei;
-       return type;
-    }
 
     void setCapacity(int newCapacity) {
         this.capacity = newCapacity;
@@ -43,8 +37,11 @@ public abstract class Source extends Object {
     //                                                              dar functionalitate diferita)
 
     public String toString() {
-        return name + " (" + type + ") " + " supplies " + capacity;
+        return name  + " supplies " + capacity;
     }
+
+    /*clasa abstracta va fi implementata de fiecare subclasa*/
+    public abstract String getSourceType();
 
     @Override
     public boolean equals(Object newObject){
@@ -54,7 +51,7 @@ public abstract class Source extends Object {
             return true;
         }
 
-        /*metoda getClass() a clasei Class returneaza o instanta a clasei Class care contine informatii
+        /**metoda getClass() a clasei Class returneaza o instanta a clasei Class care contine informatii
         *   despre clasa Source (clasa din care a fost apelata metoda getClass()).
         * if-ul urmator verifica daca metoda getClass() returneaza aceeasi instanta atat pentru clasa curenta cand si
         * pentru clasa cu care se face verificarea. */

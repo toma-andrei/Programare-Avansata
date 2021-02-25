@@ -23,15 +23,10 @@ public class Main extends Object {
                 {5, 6, 8, 2}
         };
 
-        //creaza 3 instante ale sursei fiecare cu numele, tipul si capacitatea ei
-        //Fiecare tip de sursa este extinsa de clasa Source
-
         Factory s1 = new Factory("Coca-Cola Iasi", 40);
         Warehouse s2 = new Warehouse("Coca-cola Cluj", 35);
         Warehouse s3 = new Warehouse("Coca-Cola Brasov", 35);
 
-
-        //creeaza 3 instante ale destiantiei, fiecare cu numele, tipul si cererea ei.
         Destination d1 = new Destination("Carrefour Felicia", 20);
         Destination d2 = new Destination("Lidl Tatarasi", 25);
         Destination d3 = new Destination("Mircea PF", 25);

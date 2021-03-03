@@ -1,9 +1,9 @@
-package com.company;
+package Optional;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Hotel implements Classifiable{
+public class Hotel implements Classifiable {
 
     private String name;
     private String description;
@@ -32,7 +32,7 @@ public class Hotel implements Classifiable{
 
     @Override
     public boolean isClassifiable() {
-        return rank > 0;
+        return rank > 0 ? true : false;
     }
 
     @Override

@@ -28,6 +28,8 @@ public class Main {
         System.out.println(Iasi.getPlacesToVisit());
         System.out.println();
 
+        System.out.println("Distance (minutes) from " + v1 + " to: " + "\n" + v1.getTimeDistance());
+        System.out.println();
         System.out.println("Distance (minutes) from " + v4 + " to: " + "\n" + v4.getTimeDistance());
 
     }

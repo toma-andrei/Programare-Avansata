@@ -5,6 +5,6 @@ package com.company;
  */
 
 public interface Visitable {
-    public boolean isOpened();
-    public String getOpeningHour();
+     boolean isOpened();
+     String getOpeningHour();
 }

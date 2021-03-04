@@ -1,45 +1,69 @@
 package Optional;
 
-public class Main {
+import java.util.List;
 
+public class Main {
+    /***
+     * @author: Toma Andrei-Paul
+     */
     public static void main(String[] args) {
 
-        Hotel v1 = new Hotel("Traian", "Nice old looking building", 5, 2);
+        Hotel hotelTraian = new Hotel("Traian", "Nice old looking building", 5, 2);
 
-        Museum v2 = new Museum("Muzeul literaturii", "08:00", "22:00", 15);
-        Museum v3 = new Museum("Bojdeuca lui Ion Creanga", "08:00", "22:00", 10);
+        Museum muzeulLiteraturii = new Museum("Muzeul literaturii", "08:00", "22:00", 15);
+        Museum bojdeucaLuiCreanga = new Museum("Bojdeuca lui Ion Creanga", "08:00", "22:00", 10);
 
-        Church v4 = new Church("Sfintii 3 ierarhi", "06:30", "21:30");
-        Church v5 = new Church("Mitropolia", "05:30", "22:00");
+        Church sfintiiTreiIerarhi = new Church("Sfintii 3 ierarhi", "06:30", "21:30");
+        Church mitropolia = new Church("Mitropolia", "05:30", "22:00");
 
-        Restaurant v6 = new Restaurant("Mamma Mia", "07:00", "23:30", 0);
+        Restaurant restaurantMammaMia = new Restaurant("Mamma Mia", "07:00", "23:30", 0);
 
-        Church v7 = new Church("Sfantul Andrei", "06:40", "22:00");
+        Church bisericaSfantulAndrei = new Church("Sfantul Andrei", "06:40", "22:00");
 
 
-        City Iasi = new City("Iasi",  v7, v1, v2, v3, v4, v5, v6);
+        City Iasi = new City("Iasi", bisericaSfantulAndrei, hotelTraian, muzeulLiteraturii, bojdeucaLuiCreanga,
+                sfintiiTreiIerarhi, mitropolia, restaurantMammaMia);
 
-        v1.setTimeDistance(v2, "20:00",v3, "45:00",v4, "25:00",v5, "25:00", v6, "20:00", v7, "30:00");
-        v2.setTimeDistance(v1, "20:00",v3, "30:00",v4, "35:00", v5, "35:00", v6, "25:00", v7, "25:00");
-        v3.setTimeDistance(v1, "45:00",v2, "30:00",v4, "34:00",v5, "35:00", v6, "30:00", v7, "28:00");
-        v4.setTimeDistance(v1, "25:00",v2, "35:00",v3, "34:00",v5, "05:00", v6, "15:00", v7, "33:00");
-        v5.setTimeDistance(v1, "25:00",v2, "35:00",v3, "35:00",v4, "05:00", v6, "10:00", v7, "15:00");
-        v6.setTimeDistance(v1, "20:00",v2, "25:00",v3, "30:00",v4, "15:00", v5, "10:00", v7, "15:00");
-        v7.setTimeDistance(v1, "30:00",v2, "25:00",v3, "28:00",v4, "33:00", v5, "15:00", v6, "15:00");
+        hotelTraian.setTimeDistance(muzeulLiteraturii, "20:00", bojdeucaLuiCreanga, "45:00", sfintiiTreiIerarhi, "25:00",
+                mitropolia, "25:00", restaurantMammaMia, "20:00", bisericaSfantulAndrei, "30:00");
 
-//       System.out.println(Iasi.getPlacesToVisit());
-//       System.out.println();
-//
-//      System.out.println("Distance (minutes) from " + v4 + " to: " + "\n" + v4.getTimeDistance());
+        muzeulLiteraturii.setTimeDistance(hotelTraian, "20:00", bojdeucaLuiCreanga, "30:00", sfintiiTreiIerarhi, "35:00",
+                mitropolia, "35:00", restaurantMammaMia, "25:00", bisericaSfantulAndrei, "25:00");
+
+        bojdeucaLuiCreanga.setTimeDistance(hotelTraian, "45:00", muzeulLiteraturii, "30:00", sfintiiTreiIerarhi, "34:00",
+                mitropolia, "35:00", restaurantMammaMia, "30:00", bisericaSfantulAndrei, "28:00");
+
+        sfintiiTreiIerarhi.setTimeDistance(hotelTraian, "25:00", muzeulLiteraturii, "35:00", bojdeucaLuiCreanga, "34:00",
+                mitropolia, "05:00", restaurantMammaMia, "15:00", bisericaSfantulAndrei, "33:00");
+
+        mitropolia.setTimeDistance(hotelTraian, "25:00", muzeulLiteraturii, "35:00", bojdeucaLuiCreanga, "35:00", sfintiiTreiIerarhi,
+                "05:00", restaurantMammaMia, "10:00", bisericaSfantulAndrei, "15:00");
+
+        restaurantMammaMia.setTimeDistance(hotelTraian, "20:00", muzeulLiteraturii, "25:00", bojdeucaLuiCreanga, "30:00",
+                sfintiiTreiIerarhi, "15:00", mitropolia, "10:00", bisericaSfantulAndrei, "15:00");
+
+        bisericaSfantulAndrei.setTimeDistance(hotelTraian, "30:00", muzeulLiteraturii, "25:00", bojdeucaLuiCreanga, "28:00",
+                sfintiiTreiIerarhi, "33:00", mitropolia, "15:00", restaurantMammaMia, "15:00");
+
         System.out.println();
 
-        Iasi.getFreeVisitable();
+        System.out.println("Distance (minutes) from " + sfintiiTreiIerarhi + " to: " + "\n" + sfintiiTreiIerarhi.getTimeDistance());
+        System.out.println();
+
+        //lista de instante Visitable in care vor fi puse obiecte visitable dar nu payable.
+        List<Visitable> freeVisitablePlaces = Iasi.getFreeVisitable();
+
+        System.out.println("Locuri ce pot fi vizitate fara a plati ordonate dupa ora de deschidere: ");
+
+        for (Visitable place : freeVisitablePlaces) {
+            System.out.println(place + " " + place.getOpeningHour());
+        }
 
         System.out.println();
 
-        System.out.println("Hours Between: " + Visitable.getVisitingDuration(v6));
+        System.out.println(restaurantMammaMia + "is opened for " + Visitable.getVisitingDuration(restaurantMammaMia) + " a day");
 
         System.out.println();
-        TravelPlan myPlan = new TravelPlan(Iasi, v2, v4, v3, v6, v1);
+        TravelPlan myPlan = new TravelPlan(Iasi, muzeulLiteraturii, sfintiiTreiIerarhi, bojdeucaLuiCreanga, restaurantMammaMia, hotelTraian);
     }
 }

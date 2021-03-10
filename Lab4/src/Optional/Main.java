@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        List<Student> students = Stream.of(new Student("Toma Andrei", 10,"Liceul Lascar Rosetti", "Colegiul Mihai Eminescu", "Liceul Dimitrie Leonida"),
+        List<Student> students = Stream.of(new Student("Toma Andrei", 10, "Liceul Lascar Rosetti", "Colegiul Mihai Eminescu", "Liceul Dimitrie Leonida"),
                 new Student("Matei Marian", 10, "Liceul Lascar Rosetti", "Colegiul Mihai Eminescu", "Liceul Dimitrie Leonida"),
                 new Student("Ionut Tache", 10, "Liceul Lascar Rosetti", "Colegiul Mihai Eminescu"),
                 new Student("Costel Dragan", 10, "Liceul Lascar Rosetti", "Liceul Dimitrie Leonida"))
@@ -51,14 +51,15 @@ public class Main {
             String schoolFirstName = faker.artist().name();
             String schoolLastName = faker.name().lastName();
 
-            schoolNames.add(schoolFirstName + " " + schoolLastName);
+            if (!(schoolNames.contains(schoolFirstName + " " + schoolLastName)))
+                schoolNames.add(schoolFirstName + " " + schoolLastName);
         }
 
         for (int i = 0; i < noOfStudents; i++) { // genereaza nume de studenti
             String studentFirstName = faker.name().firstName();
             String studentLastName = faker.name().lastName();
-
-            studentNames.add(studentFirstName + " " + studentLastName);
+            if (!(studentNames.contains(studentFirstName + " " + studentLastName)))
+                studentNames.add(studentFirstName + " " + studentLastName);
         }
 
         List<Student> studentInstances = new ArrayList<>();
@@ -105,11 +106,12 @@ public class Main {
 
         Problem bigProblemWithStudents = new Problem();
 
-        //bigProblemWithStudents.showProblem(studentInstances, schoolInstances);
+        bigProblemWithStudents.showProblem(studentInstances, schoolInstances);
 
         Solution toBeSolved = new Solution();
 
-        toBeSolved.Solve(studentInstances, schoolInstances);
+        Map<Student, School> solvedMatching = toBeSolved.Solve(studentInstances, schoolInstances);
 
+        System.out.println(solvedMatching);
     }
 }

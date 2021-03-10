@@ -26,7 +26,6 @@ public class Main {
                 .collect(Collectors.toList());
 
         System.out.println(students + "\n");
-
         System.out.println(schools + "\n");
 
         List<Student> linkedListStudents = new LinkedList<>();
@@ -37,7 +36,9 @@ public class Main {
          *foloseste o expresie lambda pentru a sorta studentii dupa nume.
          */
         linkedListStudents.sort((Student stud1, Student stud2) -> stud1.getName().compareTo(stud2.getName()));
-//        Collections.sort(students, Comparator.comparing(Student::getName));
+        //Collections.sort(linkedListStudents, Comparator.comparing(Student::getName));
+
+        System.out.println(linkedListStudents);
 
         /***
          * clasa School trebuie sa implementeze interfata Comparable si sa suprascrie metoda compareTo() (elementele trebuie
@@ -53,14 +54,18 @@ public class Main {
 
         Map<Student, List<String>> studentPreferencesHashMap = new HashMap<>();
 
-        students.forEach(student -> studentPreferencesHashMap.put(student, student.getStudentPreferences()));
+        for (Student student1 : students) {
+            studentPreferencesHashMap.put(student1, student1.getStudentPreferences());
+        }
 
         System.out.println(studentPreferencesHashMap);
         System.out.println();
 
         Map<Student, List<String>> studentPreferencesTreeMap = new TreeMap<>();
 
-        students.forEach(student -> studentPreferencesTreeMap.put(student, student.getStudentPreferences()));
+        for (Student student : students) {
+            studentPreferencesTreeMap.put(student, student.getStudentPreferences());
+        }
 
         System.out.println(studentPreferencesTreeMap);
 

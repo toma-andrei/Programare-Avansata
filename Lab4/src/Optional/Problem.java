@@ -3,8 +3,23 @@ package Optional;
 import java.util.List;
 
 public class Problem {
+    private List<School> schools;
+    private List<Student> students;
 
-    public void showProblem(List<Student> students, List<School> schools) {
+    public Problem(List<Student> student, List<School> school) {
+        this.schools = school;
+        this.students = student;
+    }
+
+    public List<School> getSchools() {
+        return schools;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void showProblem() {
 
         System.out.println("STUDENTS and PREFERENCES: ");
 

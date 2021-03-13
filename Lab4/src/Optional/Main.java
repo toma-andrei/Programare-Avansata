@@ -32,6 +32,10 @@ public class Main {
 
         System.out.println("filtered students are: \n" + filteredStudents + "\n");
 
+
+        /**
+         * filtreaza scolile ce il au pe "Costel Dragan" in capul listei de preferinte
+         */
         List<School> filteredSchools = schools.stream()
                 .filter(s -> s.getSchoolPreferences().get(0).equals("Costel Dragan"))
                 .collect(Collectors.toList());
@@ -42,12 +46,13 @@ public class Main {
         List<String> schoolNames = new ArrayList<>();
         List<String> studentNames = new ArrayList<>();
 
+        //numarul de studenti si scoli pentru care se creeaza instante
         int noOfStudents = 20;
         int noOfSchools = 10;
 
         Faker faker = new Faker();
 
-        for (int i = 0; i < noOfSchools; i++) { // genereaza nume de scoli
+        for (int i = 0; i < noOfSchools; i++) { // genereaza nume de scoli de mai mult de un cuvant
             String schoolFirstName = faker.artist().name();
             String schoolLastName = faker.name().lastName();
 
@@ -55,7 +60,7 @@ public class Main {
                 schoolNames.add(schoolFirstName + " " + schoolLastName);
         }
 
-        for (int i = 0; i < noOfStudents; i++) { // genereaza nume de studenti
+        for (int i = 0; i < noOfStudents; i++) { // genereaza nume si prenume de studenti
             String studentFirstName = faker.name().firstName();
             String studentLastName = faker.name().lastName();
             if (!(studentNames.contains(studentFirstName + " " + studentLastName)))
@@ -64,8 +69,9 @@ public class Main {
 
         List<Student> studentInstances = new ArrayList<>();
 
-        /**
-         creeaza instante pentru studenti si le adauga preferinte.
+        /*
+         creeaza instante pentru studenti si le adauga preferinte unice +
+                    genereaza un scor random (mai mare egal ca 5) pentru fiecare student.
          */
         for (int i = 0; i < studentNames.size(); i++) {
 
@@ -85,7 +91,8 @@ public class Main {
         }
 
         List<School> schoolInstances = new ArrayList<>();
-
+        //creeaza instante pentru scoli: adauga preferinte unice (din lista de nume de studenti)
+        //              si adauga o capacitate random (asa incat fiecare student sa aiba o scoala)
         for (int i = 0; i < schoolNames.size(); i++) {
             int randomCapacity = (int) (Math.random() * (Math.abs(noOfStudents - noOfSchools)) +
                     Math.min(noOfSchools, noOfStudents) +
@@ -104,14 +111,15 @@ public class Main {
             }
         }
 
-        Problem bigProblemWithStudents = new Problem();
+        Problem bigProblemWithStudents = new Problem(studentInstances, schoolInstances);
 
-        bigProblemWithStudents.showProblem(studentInstances, schoolInstances);
+        //uncomment pentru a vedea lista studentilor si a scolilor
+        //bigProblemWithStudents.showProblem();
 
         Solution toBeSolved = new Solution();
 
-        Map<Student, School> solvedMatching = toBeSolved.Solve(studentInstances, schoolInstances);
+        Map<Student, School> solvedMatching = toBeSolved.Solve(bigProblemWithStudents);
 
-        System.out.println(solvedMatching);
+        System.out.println("Lista repartizarii studentilor: \n" + solvedMatching);
     }
 }

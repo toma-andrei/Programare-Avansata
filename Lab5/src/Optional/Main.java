@@ -1,10 +1,9 @@
 package Optional;
 
-import java.io.IOException;
 import java.util.*;
 
 public class Main {
-
+//comenzi:
     //createCatalog name;
     //addImage catalogName imageName path
     //addBook catalogName bookName releaseYear path
@@ -12,7 +11,6 @@ public class Main {
     //save catalogName
 
     public static void main(String[] args) throws TooFewArgumentsException {
-
 
         List<Catalog> catalogList = new ArrayList<>();
 
@@ -45,9 +43,8 @@ public class Main {
                     }
 
                     catalogList.add(new Catalog(parts[1]));
-                }
 
-                if (parts[0].equals("addImage")) {
+                } else if (parts[0].equals("addImage")) {
                     if (parts.length > 4)
                         throw new TooManyArgumentsException("too many arguments for addImage call!");
                     else if (parts.length < 4)
@@ -66,9 +63,8 @@ public class Main {
 
                     Image imageFile = new Image(parts[2], parts[3]);
                     myExecutor.executeOperation(new AddCommand(myCatalog, imageFile));
-                }
 
-                if (parts[0].equals("addBook")) {
+                } else if (parts[0].equals("addBook")) {
                     if (parts.length > 5)
                         throw new TooManyArgumentsException("too many arguments for addBook call!");
                     else if (parts.length < 5)
@@ -88,9 +84,7 @@ public class Main {
 
                     Book bookFile = new Book(parts[2], Integer.parseInt(parts[3]), parts[4]);
                     myExecutor.executeOperation(new AddCommand(myCatalog, bookFile));
-                }
-
-                if (parts[0].equals("play")) {
+                } else if (parts[0].equals("play")) {
                     if (parts.length > 3)
                         throw new TooManyArgumentsException("too many arguments for play call!");
                     else if (parts.length < 3)
@@ -109,9 +103,8 @@ public class Main {
                         throw new GeneralException("catalog does not exist!");
 
                     myExecutor.executeOperation(new PlayCommand(myCatalog, parts[2]));
-                }
 
-                if (parts[0].equals("list")) {
+                } else if (parts[0].equals("list")) {
                     if (parts.length > 2)
                         throw new TooManyArgumentsException("too many arguments for list call!");
                     else if (parts.length < 2)
@@ -130,9 +123,8 @@ public class Main {
                         throw new GeneralException("catalog does not exist!");
 
                     myExecutor.executeOperation(new ListCommand(myCatalog));
-                }
 
-                if (parts[0].equals("save")) {
+                } else if (parts[0].equals("save")) {
                     if (parts.length > 2)
                         throw new TooManyArgumentsException("too many arguments for play call!");
                     else if (parts.length < 2)
@@ -151,9 +143,8 @@ public class Main {
                         throw new GeneralException("catalog does not exist!");
 
                     myExecutor.executeOperation(new SaveCommand(myCatalog, parts[1]));
-                }
 
-                if (parts[0].equals("load")) {
+                } else if (parts[0].equals("load")) {
                     if (parts.length > 2)
                         throw new TooManyArgumentsException("too many arguments for play call!");
                     else if (parts.length < 2)
@@ -163,27 +154,16 @@ public class Main {
                     Catalog myCatalog = catalogList.get(catalogList.size() - 1);
 
                     myExecutor.executeOperation(new LoadCommand(myCatalog, (parts[1] + ".ser")));
+                } else if (parts[0].equals("quit")) {
+                    break;
+                }
+                else{
+                    throw new GeneralException("command unknown!");
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
-
-
-
-/*        Catalog myCatalog = new Catalog("catalogName");
-        Image copacImg = new Image("copac", "C:\\Users\\toma1\\IdeaProjects\\Lab5\\InputSources\\copac.jpg");
-        Image caineImg = new Image("caine", "C:\\Users\\toma1\\IdeaProjects\\Lab5\\InputSources\\caine.jpg");
-        Book cursJava = new Book("javaBook", 2014, "C:\\Users\\toma1\\IdeaProjects\\Lab5\\InputSources\\Cristian_Frasinaru-Curs_practic_de_Java.pdf");
-
-
-        myExecutor.executeOperation(new AddCommand(myCatalog, copacImg));
-        myExecutor.executeOperation(new AddCommand(myCatalog, caineImg));
-        myExecutor.executeOperation(new AddCommand(myCatalog, cursJava));
-        myExecutor.executeOperation(new ListCommand(myCatalog));
-
-        myExecutor.executeOperation(new PlayCommand(myCatalog, "caine"));*/
     }
 }

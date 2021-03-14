@@ -14,8 +14,17 @@ public class Catalog implements Serializable {
 
     List<MyFile> catalogContent = new ArrayList<>();
 
-    public void add(MyFile file) {
-        catalogContent.add(file);
+    public void add(MyFile file) throws GeneralException {
+        try {
+            for (MyFile content : catalogContent) {
+                if (content.getName().equals(file.name)) {
+                    throw new GeneralException("element with this name already exist");
+                }
+            }
+            catalogContent.add(file);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void list() {
@@ -23,7 +32,6 @@ public class Catalog implements Serializable {
     }
 
     public void play(String name) {
-
         MyFile file = null;
 
         for (MyFile content : catalogContent) {
@@ -41,8 +49,10 @@ public class Catalog implements Serializable {
         }
     }
 
-    public void save() {
-        String fileName = "Catalog.ser";
+    public void save(String name) {
+        String fileName = name;
+        fileName += ".ser";
+
         try {
             FileOutputStream fileOutput = new FileOutputStream(fileName);
 

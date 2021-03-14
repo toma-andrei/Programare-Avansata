@@ -1,5 +1,5 @@
 package Optional;
 
 public interface CatalogOperation {
-    void execute();
+    void execute() throws GeneralException;
 }

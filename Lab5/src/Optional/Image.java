@@ -9,6 +9,7 @@ public class Image extends MyFile {
     public Image(String name, String path) throws InvalidPathException {
         this.name = name;
         Path testPath = Paths.get(path);
+
         if(!(Files.exists(testPath))){
             throw new InvalidPathException("Invalid Path!");
         }

@@ -13,6 +13,7 @@ public class PlayCommand implements CatalogOperation {
 
     @Override
     public void execute() {
+
         catalog.play(toBePlayed);
     }
 }

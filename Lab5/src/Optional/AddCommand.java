@@ -11,7 +11,7 @@ public class AddCommand implements CatalogOperation {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws GeneralException {
         catalog.add(file);
     }
 }

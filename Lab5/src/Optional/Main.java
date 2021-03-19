@@ -3,14 +3,18 @@ package Optional;
 import java.util.*;
 
 public class Main {
-//comenzi:
-    //createCatalog name;
-    //addImage catalogName imageName path
-    //addBook catalogName bookName releaseYear path
-    //play catalogName elemName
-    //save catalogName
 
     public static void main(String[] args) throws TooFewArgumentsException {
+
+        /*citeste cate o comanda de la tastatura si o rezolva sau afiseaza exceptii daca e necesar (comenzi gresite, fisiere care nu exista etc.).
+
+    comenzi:
+        createCatalog name;
+        addImage catalogName imageName path
+        addBook catalogName bookName releaseYear path
+        play catalogName elemName
+        save catalogName
+        */
 
         List<Catalog> catalogList = new ArrayList<>();
 
@@ -18,7 +22,18 @@ public class Main {
 
         String comanda = "";
 
+        /*clasa ce "executa" comenzile*/
         CatalogOperationExecutor myExecutor = new CatalogOperationExecutor();
+
+
+        /*Foloseste designul Command pattern (Comenzile sunt vazute ca si obiecte).
+         * AddCommand, ListCommand, LoadCommand, PlayCommand, SaveCommand sunt clasele pentru comenzi
+         *
+         * Catalog este clasa ce va efectua comenzile (numita ReceiverClass in Command Pattern)
+         *
+         * CatalogOperationExecutor este clasa ce va apela metoda execute() pentru o anumita comanda (numita InvokerClass)
+         *
+         * Main este clasa ce va spune cand se executa o comanda (Clasa Client din Command Pattern)*/
 
         while (!comanda.equals("quit")) {
             comanda = comandaScanner.nextLine();
@@ -65,9 +80,9 @@ public class Main {
                     myExecutor.executeOperation(new AddCommand(myCatalog, imageFile));
 
                 } else if (parts[0].equals("addBook")) {
-                    if (parts.length > 5)
+                    if (parts.length > 4)
                         throw new TooManyArgumentsException("too many arguments for addBook call!");
-                    else if (parts.length < 5)
+                    else if (parts.length < 4)
                         throw new TooFewArgumentsException("too few arguments for addBook call!");
 
                     Catalog myCatalog = null;
@@ -84,6 +99,7 @@ public class Main {
 
                     Book bookFile = new Book(parts[2], Integer.parseInt(parts[3]), parts[4]);
                     myExecutor.executeOperation(new AddCommand(myCatalog, bookFile));
+
                 } else if (parts[0].equals("play")) {
                     if (parts.length > 3)
                         throw new TooManyArgumentsException("too many arguments for play call!");
@@ -156,8 +172,7 @@ public class Main {
                     myExecutor.executeOperation(new LoadCommand(myCatalog, (parts[1] + ".ser")));
                 } else if (parts[0].equals("quit")) {
                     break;
-                }
-                else{
+                } else {
                     throw new GeneralException("command unknown!");
                 }
 

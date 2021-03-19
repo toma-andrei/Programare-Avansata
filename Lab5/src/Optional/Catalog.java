@@ -14,7 +14,7 @@ public class Catalog implements Serializable {
 
     List<MyFile> catalogContent = new ArrayList<>();
 
-    public void add(MyFile file) throws GeneralException {
+    public void add(MyFile file) {
         try {
             for (MyFile content : catalogContent) {
                 if (content.getName().equals(file.name)) {
@@ -70,10 +70,9 @@ public class Catalog implements Serializable {
     }
 
     public void load(String name) {
-        String fileName = name;
         FileInputStream inputFile;
         try {
-            inputFile = new FileInputStream(fileName);
+            inputFile = new FileInputStream(name);
             ObjectInputStream objInput = new ObjectInputStream(inputFile);
             Catalog catalog = (Catalog) objInput.readObject();
             objInput.close();

@@ -100,7 +100,6 @@ public class Controller implements Initializable {
                 graphicsContext.fillOval(xPrim, yPrim, size, size);
                 break;
             case "Snow Flake":
-
                 graphicsContext.setStroke(Color.valueOf(shapeColor));
                 graphicsContext.beginPath();
                 graphicsContext.moveTo(xPrim, yPrim);
@@ -129,11 +128,14 @@ public class Controller implements Initializable {
         FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("png files (*.png)", "*.png");
         Stage stage = new Stage();
         File selectedFile = fileChooser.showSaveDialog(stage);
+
         try {
             WritableImage writImage = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
 
+            //face un "screenShot" la canvas si il pune in writImage
             canvas.snapshot(null, writImage);
 
+            //dintr o instanta Image imi face o imagine ce poate fi scrisa intr-un fisier
             RenderedImage renderedImage = SwingFXUtils.fromFXImage(writImage, null);
 
             ImageIO.write(renderedImage, "png", selectedFile);
@@ -156,7 +158,7 @@ public class Controller implements Initializable {
         }
     }
 
-    public void resetButtonPressed(){
-        graphicsContext.clearRect(0,0, canvas.getWidth(), canvas.getHeight());
+    public void resetButtonPressed() {
+        graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 }

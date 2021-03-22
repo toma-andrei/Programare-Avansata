@@ -1,4 +1,4 @@
-package sample;
+package Optional;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -6,12 +6,15 @@ import java.util.List;
 
 public class ToBeSaved {
     private List<Shape> shapeList = new ArrayList<>();
+    /**
+     * metodele urmatoare au fost facute pentru a putea da "undo" si cand se face load la o imagine.
+     */
 
     public void save(String path) {
         try {
             FileOutputStream fileOut = new FileOutputStream(path);
             ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
-            objOut.writeObject(shapeList);
+            objOut.writeObject(this);
         } catch (IOException e) {
             e.getStackTrace();
         }
@@ -19,6 +22,7 @@ public class ToBeSaved {
 
     public void add(Shape shape) {
         shapeList.add(shape);
+        System.out.println(shapeList.get(0).getSize());
     }
 
     public void load(String path) {
@@ -26,8 +30,8 @@ public class ToBeSaved {
             FileInputStream fileIn = new FileInputStream(path);
             ObjectInputStream objInput = new ObjectInputStream(fileIn);
 
-            this.shapeList = (List<Shape>) objInput.readObject();
-
+            ToBeSaved temp = (ToBeSaved) objInput.readObject();
+            this.shapeList = temp.getShapeList();
             fileIn.close();
             objInput.close();
 

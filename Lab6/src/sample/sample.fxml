@@ -20,7 +20,7 @@
                   <Insets bottom="10.0" left="10.0" right="2.0" top="15.0" />
                </HBox.margin>
             </Label>
-            <TextField fx:id="shapeSizeTextField" onAction="#getText">
+            <TextField fx:id="shapeSizeTextField">
                <HBox.margin>
                   <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
                </HBox.margin>
@@ -39,7 +39,7 @@
       <Canvas fx:id="canvas" height="558.0" onMouseClicked="#clickedCanvas" width="950.0" />
       <HBox prefHeight="88.0" prefWidth="950.0">
          <children>
-            <Button mnemonicParsing="false" text="Save">
+            <Button fx:id="saveButton" mnemonicParsing="false" onMouseClicked="#saveButtonPressed" text="Save">
                <font>
                   <Font size="18.0" />
                </font>
@@ -47,7 +47,7 @@
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Load">
+            <Button fx:id="loadButton" mnemonicParsing="false" onMouseClicked="#loadButtonPressed" text="Load">
                <font>
                   <Font size="18.0" />
                </font>
@@ -55,7 +55,7 @@
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Reset">
+            <Button fx:id="resetButton" mnemonicParsing="false" onMouseClicked="#resetButtonPressed" text="Reset">
                <font>
                   <Font size="18.0" />
                </font>

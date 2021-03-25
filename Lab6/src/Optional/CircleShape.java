@@ -32,6 +32,6 @@ public class CircleShape implements Shape {
 
     @Override
     public String getColor() {
-        return null;
+        return color;
     }
 }

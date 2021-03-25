@@ -22,7 +22,7 @@ public class ToBeSaved {
 
     public void add(Shape shape) {
         shapeList.add(shape);
-        System.out.println(shapeList.get(0).getSize());
+        System.out.println(shape.getColor());
     }
 
     public void load(String path) {

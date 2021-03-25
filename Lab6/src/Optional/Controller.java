@@ -53,6 +53,7 @@ public class Controller implements Initializable {
     private String shapeColor;
     private String shapeType;
     private GraphicsContext graphicsContext;
+    private boolean deleteModeOn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -71,29 +72,50 @@ public class Controller implements Initializable {
         shapeSize = shapeSizeTextField.getText();
         shapeType = (String) choiceBoxShape.getValue();
         shapeColor = String.valueOf(colorPicker.getValue());
+        deleteModeOn = deleteModeCheckBox.isSelected();
 
         System.out.println("size: " + shapeSize);
         System.out.println("color: " + shapeColor);
         System.out.println("shape: " + shapeType);
+        System.out.println("delete: " + deleteModeOn);
 
         graphicsContext.setFill(Color.valueOf(shapeColor));
     }
 
     public void clickedCanvas(MouseEvent event) {
 
-        if (deleteModeCheckBox.isSelected()) {
+        if (deleteModeOn) {
             resetButtonPressed();
             double xCoords = event.getX();
             double yCoords = event.getY();
 
             int dimension = shapes.getShapeList().size();
 
-            for (int i = dimension - 1; i >= 0; i++) {
+            boolean safeToRemove = true;
+
+            for (int i = dimension - 1; i >= 0; i--) {
+
                 double shapeX = shapes.getShapeList().get(i).getXCoords();
                 double shapeY = shapes.getShapeList().get(i).getYCoords();
                 double tempShapeSize = shapes.getShapeList().get(i).getSize();
-                if (!(Math.abs(shapeX - xCoords) <= tempShapeSize && Math.abs(shapeY - yCoords) <= tempShapeSize)) {
-                    ....
+
+                String color = shapes.getShapeList().get(i).getColor();
+
+                if ((!(Math.abs(shapeX - xCoords) <= tempShapeSize && Math.abs(shapeY - yCoords) <= tempShapeSize)) || !safeToRemove) {
+
+                    if (shapes.getShapeList().get(i) instanceof SquareShape) {
+                        Draw.drawSquare(shapeX, shapeY, tempShapeSize, color, graphicsContext);
+
+                    } else if (shapes.getShapeList().get(i) instanceof CircleShape) {
+                        Draw.drawCircle(shapeX, shapeY, tempShapeSize, color, graphicsContext);
+
+                    } else if (shapes.getShapeList().get(i) instanceof SnowFlake) {
+                        Draw.drawSnowFlake(shapeX, shapeY, tempShapeSize, color, graphicsContext);
+
+                    }
+                } else {
+                    safeToRemove = false;
+                    shapes.getShapeList().remove(i);
                 }
             }
         } else {
@@ -106,36 +128,18 @@ public class Controller implements Initializable {
             double yPrim = yCoords - size / 2;
 
             switch (shapeType) {
-                case "Square":
+                case "Square" -> {
                     shapes.add(new SquareShape(xPrim, yPrim, size, shapeColor));
-                    graphicsContext.fillRect(xPrim, yPrim, size, size);
-                    break;
-                case "Circle":
+                    Draw.drawSquare(xPrim, yPrim, size, shapeColor, graphicsContext);
+                }
+                case "Circle" -> {
                     shapes.add(new CircleShape(xPrim, yPrim, size, shapeColor));
-                    graphicsContext.fillOval(xPrim, yPrim, size, size);
-                    break;
-                case "Snow Flake":
+                    Draw.drawCircle(xPrim, yPrim, size, shapeColor, graphicsContext);
+                }
+                case "Snow Flake" -> {
                     shapes.add(new SnowFlake(xPrim, yPrim, size, shapeColor));
-                    graphicsContext.setStroke(Color.valueOf(shapeColor));
-                    graphicsContext.beginPath();
-                    graphicsContext.moveTo(xPrim, yPrim);
-                    graphicsContext.lineTo(xPrim, yPrim - size);
-                    graphicsContext.moveTo(xPrim, yPrim);
-                    graphicsContext.lineTo(xPrim + size, yPrim);
-                    graphicsContext.moveTo(xPrim, yPrim);
-                    graphicsContext.lineTo(xPrim - size, yPrim);
-                    graphicsContext.moveTo(xPrim, yPrim);
-                    graphicsContext.lineTo(xPrim, yPrim + size);
-                    graphicsContext.moveTo(xPrim, yPrim);
-                    graphicsContext.lineTo(xPrim + size, yPrim + size);
-                    graphicsContext.moveTo(xPrim, yPrim);
-                    graphicsContext.lineTo(xPrim - size, yPrim + size);
-                    graphicsContext.moveTo(xPrim, yPrim);
-                    graphicsContext.lineTo(xPrim - size, yPrim - size);
-                    graphicsContext.moveTo(xPrim, yPrim);
-                    graphicsContext.lineTo(xPrim + size, yPrim - size);
-                    graphicsContext.stroke();
-                    break;
+                    Draw.drawSnowFlake(xPrim, yPrim, size, shapeColor, graphicsContext);
+                }
             }
         }
     }

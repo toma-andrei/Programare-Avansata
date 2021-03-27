@@ -1,8 +1,13 @@
 package Optional;
 
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
@@ -21,6 +26,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -47,6 +54,16 @@ public class Controller implements Initializable {
     private Button undoButton;
     @FXML
     private CheckBox deleteModeCheckBox;
+    @FXML
+    private CheckBox shapeRecognitionCheckBox;
+    @FXML
+    private CheckBox square;
+    @FXML
+    private CheckBox circle;
+    @FXML
+    private CheckBox snowFlake;
+    @FXML
+    private CheckBox freeDraw;
 
     ToBeSaved shapes = new ToBeSaved();
     private String shapeSize;
@@ -54,11 +71,12 @@ public class Controller implements Initializable {
     private String shapeType;
     private GraphicsContext graphicsContext;
     private boolean deleteModeOn;
+    private List<Double> xPointsShapeRec = new ArrayList<>();
+    private List<Double> yPointsShapeRec = new ArrayList<>();
+    private double firstAndLastMaxDistance = 50;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        choiceBoxShape.getItems().addAll("Square", "Circle", "Snow Flake", "Free Draw");
 
         graphicsContext = canvas.getGraphicsContext2D();
     }
@@ -68,11 +86,23 @@ public class Controller implements Initializable {
         stage.close();
     }
 
+    /***
+     * cand butonul Done e apasat, sunt preluate informatiile din elementele de control.
+     */
     public void doneButtonPressed() {
         shapeSize = shapeSizeTextField.getText();
-        shapeType = (String) choiceBoxShape.getValue();
         shapeColor = String.valueOf(colorPicker.getValue());
         deleteModeOn = deleteModeCheckBox.isSelected();
+
+        if (square.isSelected()) {
+            shapeType = "Square";
+        } else if (circle.isSelected()) {
+            shapeType = "Circle";
+        } else if (snowFlake.isSelected()) {
+            shapeType = "Snow Flake";
+        } else if (freeDraw.isSelected()) {
+            shapeType = "Free Draw";
+        }
 
         System.out.println("size: " + shapeSize);
         System.out.println("color: " + shapeColor);
@@ -82,8 +112,14 @@ public class Controller implements Initializable {
         graphicsContext.setFill(Color.valueOf(shapeColor));
     }
 
+    /***
+     * @param event - folosit pentru a prelua coordonatele unde a avut loc evenimentul de apasare cu mouseul
+     * cand a fost apasat click pe canvas, daca modul de stergere e pornit, curata canvasul si redeseneaza formele cu exceptia celui mai recent desenat in zona
+     *              in care s-a apasat click. Daca modul de stergere nu e pornit, se verifica ce forma a fost selectata si se deseneaza forma respectiva cu
+     *              constrangerile (culoare, forma, dimensiune) date din panoul de control.
+     *
+     */
     public void clickedCanvas(MouseEvent event) {
-
         if (deleteModeOn) {
             resetButtonPressed();
             double xCoords = event.getX();
@@ -144,13 +180,25 @@ public class Controller implements Initializable {
         }
     }
 
+    /***
+     * cand se face drag pe canvas, se apeleaza metoda aceasta si se deseneaza cercuri, cu fiecare pixel pe care s-a facut drag.
+     * daca shapeRecognitionMode este on, se tin minte punctele peste care s-a facut drag.
+     */
     public void freeDrawing() {
+
         graphicsContext.setFill(Color.valueOf(shapeColor));
-        canvas.setOnMouseDragged(e -> {
-            if (shapeType.equals("Free Draw")) {
-                graphicsContext.fillOval(e.getX(), e.getY(), Double.parseDouble(shapeSize), Double.parseDouble(shapeSize));
-            }
-        });
+        if (!shapeRecognitionCheckBox.isSelected()) {
+            canvas.setOnMouseDragged(e -> {
+                if (shapeType.equals("Free Draw")) {
+                    graphicsContext.fillOval(e.getX(), e.getY(), Double.parseDouble(shapeSize), Double.parseDouble(shapeSize));
+                }
+            });
+        } else {
+            canvas.setOnMouseDragged(e -> {
+                xPointsShapeRec.add(e.getX());
+                yPointsShapeRec.add(e.getY());
+            });
+        }
     }
 
     public void saveButtonPressed() {
@@ -190,11 +238,57 @@ public class Controller implements Initializable {
         graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
+
+    /***
+     * algoritmul de recunoastere verifica care este distanta dintre punctul de inceput si punctul de final, peste care s-au facut drag
+     *          (punctele sunte retinute in metoda freeDrawing()). Daca distanta e relativ mare, deseneaza o linie intre cele doua puncte,
+     *          iar daca e relativ mica, deseneaza un cerc cu centrul in centrul multimii de puncte peste care s-a facut drag, culoarea
+     *          precizata in panoul de control si dimensiunea calculata in functie de multimea de puncte generata de evenimentul de drag.
+     *
+     *
+     */
+    public void recognizeShape() {
+        if (shapeRecognitionCheckBox != null && shapeRecognitionCheckBox.isSelected()) {
+            double xPrim = xPointsShapeRec.get(0);
+            double yPrim = yPointsShapeRec.get(0);
+            double xSec = xPointsShapeRec.get(xPointsShapeRec.size() - 1);
+            double ySec = yPointsShapeRec.get(yPointsShapeRec.size() - 1);
+
+            if (Math.abs(xPrim - xSec) > firstAndLastMaxDistance || Math.abs(yPrim - ySec) > firstAndLastMaxDistance) {
+                Draw.drawLine(xPrim, yPrim, xSec, ySec, shapeColor, graphicsContext);
+            } else {
+                double minX = Integer.MAX_VALUE;
+                double maxX = Integer.MIN_VALUE;
+                double minY = Integer.MAX_VALUE;
+                double maxY = Integer.MIN_VALUE;
+
+
+                for (double pct : xPointsShapeRec) {
+                    minX = Math.min(pct, minX);
+                    maxX = Math.max(pct, maxX);
+                }
+
+                for (double pct : yPointsShapeRec) {
+                    minY = Math.min(pct, minY);
+                    maxY = Math.max(pct, maxY);
+                }
+
+                Draw.drawCircle(minX + (maxX - minX) / 2, minY + (maxY - minY) / 2, maxX - minX, shapeColor, graphicsContext);
+            }
+
+            xPointsShapeRec.clear();
+            yPointsShapeRec.clear();
+        }
+    }
+
+    /***
+     * curata canvasul si redeseneaza formele (retinute intr-un ArrayList) cu exceptia ultimului.
+     */
     public void undoButtonPressed() {
         resetButtonPressed();
 
         int dimension = shapes.getShapeList().size();
-
+        System.out.println("Am un numar de obiecte : " + dimension);
         if (dimension == 0)
             return;
 
@@ -203,10 +297,12 @@ public class Controller implements Initializable {
         for (int i = 0; i < dimension - 1; i++) {
             double xPrim = shapes.getShapeList().get(i).getXCoords();
             double yPrim = shapes.getShapeList().get(i).getYCoords();
-            String color = shapes.getShapeList().get(i).getColor();
-            double size = shapes.getShapeList().get(i).getSize();
-            String type = "Snow Flake";
 
+            String color = shapes.getShapeList().get(i).getColor();
+
+            double size = shapes.getShapeList().get(i).getSize();
+
+            String type = "Snow Flake";
             if (shapes.getShapeList().get(0) instanceof SquareShape)
                 type = "Square";
             if (shapes.getShapeList().get(0) instanceof CircleShape)
@@ -214,33 +310,39 @@ public class Controller implements Initializable {
 
             switch (type) {
                 case "Square":
-                    graphicsContext.fillRect(xPrim, yPrim, size, size);
+                    Draw.drawSquare(xPrim, yPrim, size, color, graphicsContext);
                     break;
                 case "Circle":
                     graphicsContext.fillOval(xPrim, yPrim, size, size);
+                    Draw.drawCircle(xPrim, yPrim, size, color, graphicsContext);
                     break;
                 case "Snow Flake":
-                    graphicsContext.setStroke(Color.valueOf(color));
-                    graphicsContext.beginPath();
-                    graphicsContext.moveTo(xPrim, yPrim);
-                    graphicsContext.lineTo(xPrim, yPrim - size);
-                    graphicsContext.moveTo(xPrim, yPrim);
-                    graphicsContext.lineTo(xPrim + size, yPrim);
-                    graphicsContext.moveTo(xPrim, yPrim);
-                    graphicsContext.lineTo(xPrim - size, yPrim);
-                    graphicsContext.moveTo(xPrim, yPrim);
-                    graphicsContext.lineTo(xPrim, yPrim + size);
-                    graphicsContext.moveTo(xPrim, yPrim);
-                    graphicsContext.lineTo(xPrim + size, yPrim + size);
-                    graphicsContext.moveTo(xPrim, yPrim);
-                    graphicsContext.lineTo(xPrim - size, yPrim + size);
-                    graphicsContext.moveTo(xPrim, yPrim);
-                    graphicsContext.lineTo(xPrim - size, yPrim - size);
-                    graphicsContext.moveTo(xPrim, yPrim);
-                    graphicsContext.lineTo(xPrim + size, yPrim - size);
-                    graphicsContext.stroke();
+                    Draw.drawSnowFlake(xPrim, yPrim, size, color, graphicsContext);
                     break;
             }
+        }
+    }
+
+    /***
+     * schimba scena daca este selectat modul de freeDrawing. (adauga in scena noua un buton de shapeRecognition).
+     */
+    public void changeScene(MouseEvent event) throws IOException {
+        if (freeDraw.isSelected()) {
+            Parent root = FXMLLoader.load(getClass().getResource("secondScene.fxml"));
+            Scene newScene = new Scene(root);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(newScene);
+            window.show();
+            shapes.add(new SquareShape(0, 0, 0, "#000000"));
+            undoButtonPressed();
+        } else {
+            Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+            Scene newScene = new Scene(root);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(newScene);
+            window.show();
+            shapes.add(new SquareShape(0, 0, 0, "#000000"));
+            undoButtonPressed();
         }
     }
 }

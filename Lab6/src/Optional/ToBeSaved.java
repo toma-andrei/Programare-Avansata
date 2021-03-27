@@ -4,6 +4,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/***
+ * retine o lista cu forme ce au fost desenate pe canvas.
+ */
 public class ToBeSaved {
     private List<Shape> shapeList = new ArrayList<>();
     /**

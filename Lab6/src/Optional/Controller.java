@@ -71,8 +71,10 @@ public class Controller implements Initializable {
     private String shapeType;
     private GraphicsContext graphicsContext;
     private boolean deleteModeOn;
+    //ArrayList-uri de puncte (folosite pentru shape recognition)
     private List<Double> xPointsShapeRec = new ArrayList<>();
     private List<Double> yPointsShapeRec = new ArrayList<>();
+    //folosit pentru shape recognition.
     private double firstAndLastMaxDistance = 50;
 
     @Override

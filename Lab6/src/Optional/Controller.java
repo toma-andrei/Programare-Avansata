@@ -290,7 +290,6 @@ public class Controller implements Initializable {
         resetButtonPressed();
 
         int dimension = shapes.getShapeList().size();
-        System.out.println("Am un numar de obiecte : " + dimension);
         if (dimension == 0)
             return;
 
@@ -305,9 +304,9 @@ public class Controller implements Initializable {
             double size = shapes.getShapeList().get(i).getSize();
 
             String type = "Snow Flake";
-            if (shapes.getShapeList().get(0) instanceof SquareShape)
+            if (shapes.getShapeList().get(i) instanceof SquareShape)
                 type = "Square";
-            if (shapes.getShapeList().get(0) instanceof CircleShape)
+            if (shapes.getShapeList().get(i) instanceof CircleShape)
                 type = "Circle";
 
             switch (type) {

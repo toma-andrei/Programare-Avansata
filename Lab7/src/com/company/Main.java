@@ -17,7 +17,7 @@ public class Main {
         Table table = new Table(5);
         Game game = new Game(table);
 
-        Thread player1 = new Player(playerOne, game);
+        Thread player1 = new Player(playerOne,game);
         Thread player2 = new Player(playerTwo, game);
 
         player1.start();

@@ -6,48 +6,39 @@ import java.util.Scanner;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Game {
-    private Table table;
-    private List<Integer> from = new ArrayList<>();
-    private List<Integer> to = new ArrayList<>();
+    private final Table table;
+    private static final List<Integer> tokens = new ArrayList<>();
 
     public Game(Table table) {
         this.table = table;
     }
 
-    public void move() {
+    public void move(Player player) {
         boolean playerMoved = false;
-        int from;
-        int to;
+        int token;
 
         while (!playerMoved) {
 
             Scanner scan = new Scanner(System.in);
-            System.out.println(this.from.size());
-            System.out.print("Move from: ");
+
+            System.out.print("Take token: ");
             System.out.flush();
-            from = scan.nextInt();
+
+            token = scan.nextInt();
             scan.nextLine();
 
-            System.out.print("Move to: ");
-            System.out.flush();
-            to = scan.nextInt();
-            scan.nextLine();
-
-            for (int i = 0; i < this.from.size(); i++) {
-                if (this.from.get(i).equals(from) && this.to.get(i).equals(to)) {
-                    System.out.println("Move can't be done! Try another!");
-                    System.out.flush();
-                    break;
-                } else {
-                    this.from.add(from);
-                    this.to.add(to);
-                }
+            if(tokens.contains(token)){
+                System.out.println("Move can't be done, try another!");
+                continue;
             }
+
             playerMoved = true;
+            tokens.add(token);
+            player.addScore(table.getTable().get(token));
         }
     }
 
     public boolean existsMove() {
-        return true;
+        return tokens.size() < table.dimension;
     }
 }

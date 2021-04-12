@@ -1,8 +1,10 @@
-package com.company;
+package Optional;
+
+import java.util.List;
 
 //  https://www.baeldung.com/java-dao-pattern
 public interface MovieDao {
-    public void createMovie(int id, String title, String releaseDate, float duration, float score, int ... genres);
+    public void createMovie(String id, String title, String releaseDate, float duration, float score, List<Integer> genres);
     public void createGenre(int id, String name);
     public void findMovieById(int id);
     public void findGenreById(int id);

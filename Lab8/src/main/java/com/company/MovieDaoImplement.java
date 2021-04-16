@@ -44,8 +44,8 @@ public class MovieDaoImplement implements MovieDao {
             stmt.setFloat(5, score);
 
             stmt.execute();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         // pentru fiecare film insereaza in tabela de asocieri genul corespunzator;

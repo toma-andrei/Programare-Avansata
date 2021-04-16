@@ -1,17 +1,22 @@
 package DaoClasses;
 
+import OOModels.Director;
+import OOModels.Genre;
 import Optional.DatabaseConnection;
 import com.mysql.cj.x.protobuf.MysqlxPrepare;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DirectorDao {
 
+    Connection conn = null;
+
     public void add(String idMovie, String[] names) {
-        Connection conn = null;
         try {
             conn = DatabaseConnection.getInstance().getConnection();
         } catch (SQLException e) {
@@ -44,5 +49,34 @@ public class DirectorDao {
             e.printStackTrace();
         }
 
+    }
+
+    public List<Director> getAll() {
+        try {
+            conn = DatabaseConnection.getInstance().getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        List<Director> directors = new ArrayList<>();
+
+        String sql = "Select * from directors;";
+
+        PreparedStatement stmt;
+
+        ResultSet rows;
+
+        try {
+            stmt = conn.prepareStatement(sql);
+            rows = stmt.executeQuery();
+
+            while (rows.next()) {
+                directors.add(new Director(rows.getString("idMovie"), rows.getString("full_name")));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return directors;
     }
 }

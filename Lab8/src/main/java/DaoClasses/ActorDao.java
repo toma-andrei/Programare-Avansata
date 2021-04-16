@@ -1,11 +1,14 @@
 package DaoClasses;
 
+import OOModels.Actor;
 import Optional.DatabaseConnection;
 
-import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ActorDao {
 
@@ -35,5 +38,34 @@ public class ActorDao {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public List<Actor> getAll() {
+        try {
+            conn = DatabaseConnection.getInstance().getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        List<Actor> actors = new ArrayList<>();
+
+        String sql = "Select * from actors;";
+
+        PreparedStatement stmt;
+
+        ResultSet rows;
+
+        try {
+            stmt = conn.prepareStatement(sql);
+            rows = stmt.executeQuery();
+
+            while (rows.next()) {
+                actors.add(new Actor(rows.getString("idMovie"), rows.getString("full_name")));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return actors;
     }
 }

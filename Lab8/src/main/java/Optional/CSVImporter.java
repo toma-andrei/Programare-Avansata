@@ -23,6 +23,7 @@ public class CSVImporter {
             DirectorDao directorDao = new DirectorDao();
             ActorDao actorDao = new ActorDao();
 
+            // citeste intreg CSV-ul si il proceseaza linie cu linie
             BufferedReader reader = new BufferedReader((new FileReader("C:\\Users\\toma1\\OneDrive\\Desktop\\IMDB_movies.csv")));
             while ((line = reader.readLine()) != null) {
                 if (!isOkToIterate) {
@@ -34,6 +35,7 @@ public class CSVImporter {
 
                 String[] splittedLine = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 
+                //preia valorile coloanelor din CSV
                 String movieId = splittedLine[0];
                 String movieTitle = splittedLine[1];
                 String releaseDate = splittedLine[4];
@@ -45,6 +47,7 @@ public class CSVImporter {
                 float score = Float.parseFloat(splittedLine[14]);
 
                 List<Integer> genresIds;
+                //apeleaza metoda "add" din clasele Dao care adauga valori in tabelele din baza de date
 
                 genresIds = genreDao.add(genres);
                 movieDao.add(movieId, movieTitle, releaseDate, duration, score, genresIds);

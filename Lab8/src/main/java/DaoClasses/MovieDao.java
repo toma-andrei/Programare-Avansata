@@ -60,77 +60,8 @@ public class MovieDao {
 
         // pentru fiecare film insereaza in tabela de asocieri genul corespunzator;
 
-//        sql = "insert into moviegenre values (?, ?)";
-//
-//        for (int i : genres) {
-//            try {
-//                stmt = conn.prepareStatement(sql);
-//                stmt.setString(1, id);
-//                stmt.setInt(2, i);
-//                stmt.execute();
-//            } catch (SQLException throwables) {
-//                throwables.printStackTrace();
-//            }
-//        }
-//
-//        try {
-//            conn.close();
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
-
         MovieGenreDao movieGenres = new MovieGenreDao();
         movieGenres.add(id, genres);
-    }
-
-    public void findByName(String name) {
-        try {
-            conn = DatabaseConnection.getInstance().getConnection();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        String sqlForMovie = "Select * from movies where title=?";
-        String sqlForGenre = "Select * from moviegenre inner join genres on moviegenre.idGen = genres.id where idMovie=?;";
-
-        PreparedStatement stmtForMovie;
-        PreparedStatement stmtForGenre;
-
-        ResultSet rows;
-
-        ResultSet rowsForGenre;
-
-        try {
-            stmtForMovie = conn.prepareStatement(sqlForMovie);
-            stmtForMovie.setString(1, name);
-            rows = stmtForMovie.executeQuery();
-            System.out.println("MOVIE WITH NAME: " + name);
-            while (rows.next()) {
-                System.out.println("id:           " + rows.getString("id"));
-                System.out.println("title:        " + rows.getString("title"));
-                System.out.println("release_date: " + rows.getString("release_date"));
-                System.out.println("duration:     " + rows.getFloat("duration"));
-                System.out.println("score:        " + rows.getFloat("score"));
-                stmtForGenre = conn.prepareStatement(sqlForGenre);
-                stmtForGenre.setInt(1, rows.getInt("id"));
-                rowsForGenre = stmtForGenre.executeQuery();
-                System.out.print("Genre:        ");
-
-                while (rowsForGenre.next()) {
-                    System.out.print(rowsForGenre.getString("name") + "  ");
-                }
-                System.out.println();
-                System.out.println();
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        try {
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public List<Movie> getAll() {
@@ -142,6 +73,8 @@ public class MovieDao {
 
         List<Movie> movieList = new ArrayList<>();
 
+        //preia toate informatiile din baza de date, relevante pentru un anumit film, iar ulterior va crea o lista de
+        //      instante Movie ce corespund fiecarui film din baza de date.
         String sqlForMovie = "Select * from movies;";
         String sqlForGenre = "Select * from moviegenre inner join genres on moviegenre.idGen = genres.id where idMovie=?;";
         String sqlForActor = "Select * from actors where idMovie=?;";
@@ -164,6 +97,7 @@ public class MovieDao {
 
             rows = stmtForMovie.executeQuery();
 
+            //parcurge fiecare linie din tabela movies. Pentru fiecare film ii cauta genurile, actorii si regizorii.
             while (rows.next()) {
 
                 String id = rows.getString("id");
@@ -180,30 +114,32 @@ public class MovieDao {
 
                 genreRows = stmtForGenre.executeQuery();
 
-
+                // genurile filmului
                 while (genreRows.next()) {
                     genres.add(new Genre(genreRows.getInt("id"), genreRows.getString("name")));
                 }
 
                 stmtForActor = conn.prepareStatement(sqlForActor);
-                stmtForActor.setString(1,id);
+                stmtForActor.setString(1, id);
 
                 actorRows = stmtForActor.executeQuery();
 
-                while(actorRows.next()){
+                //actorii filmului
+                while (actorRows.next()) {
                     actors.add(new Actor(id, actorRows.getString("full_name")));
                 }
 
                 stmtForDirector = conn.prepareStatement(sqlForDirector);
-                stmtForDirector.setString(1,id);
+                stmtForDirector.setString(1, id);
 
                 directorRows = stmtForDirector.executeQuery();
 
-                while(directorRows.next()){
+                //regizorii filmului
+                while (directorRows.next()) {
                     directors.add(new Director(id, directorRows.getString("full_name")));
                 }
 
-
+                // adauga un obiect Movie in lista de filme
                 movieList.add(new Movie(id, title, releaseDate, duration, score, genres, actors, directors));
 
             }

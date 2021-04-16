@@ -1,5 +1,6 @@
 package DaoClasses;
 
+import OOModels.Genre;
 import Optional.DatabaseConnection;
 
 import javax.xml.crypto.Data;
@@ -69,36 +70,34 @@ public class GenreDao {
         return genresIds;
     }
 
-    public void findById(int id) {
+    public List<Genre> getAll() {
         try {
             conn = DatabaseConnection.getInstance().getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        String sql = "select * from genres where id=?";
+        List<Genre> genres = new ArrayList<>();
+
+        String sql = "Select * from genres;";
 
         PreparedStatement stmt;
+
         ResultSet rows;
+
         try {
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, id);
             rows = stmt.executeQuery();
-            System.out.println("GENRE WITH ID: " + id);
+
             while (rows.next()) {
-                System.out.println(rows.getInt("id") + "  -  " + rows.getString("name"));
+                genres.add(new Genre(rows.getInt("id"), rows.getString("name")));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println();
-        System.out.println();
-
-        try {
-            conn.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+        return genres;
     }
+
+
 }

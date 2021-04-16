@@ -1,2 +1,2 @@
-Nu inteleg de ce s-a facut arborele asta ciudat de directoare. Optionalul este la src/main//java/Optional. Pachetul OOModels contine clase ce modeleaza
+Optionalul este la src/main//java/Optional. Pachetul OOModels contine clase ce modeleaza
 datele din tabel iar pachetul DaoClasses contine contine clasele ce se ocupa de adaugarea si preluarea datelor din baza de date.

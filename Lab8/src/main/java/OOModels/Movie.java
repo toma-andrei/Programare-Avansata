@@ -13,7 +13,7 @@ public class Movie {
     List<Actor> actors;
     List<Director> directors;
 
-    public Movie(String id, String title, String releaseDate, int duration, float score, List<Genre> genres,List<Actor> actors, List<Director> directors) {
+    public Movie(String id, String title, String releaseDate, int duration, float score, List<Genre> genres, List<Actor> actors, List<Director> directors) {
         this.id = id;
         this.title = title;
         this.releaseDate = releaseDate;
@@ -54,5 +54,38 @@ public class Movie {
 
     public List<Genre> getGenres() {
         return genres;
+    }
+
+    public static void print(List<Movie> movies) {
+        System.out.println("MOVIE LIST: ");
+        for (Movie i : movies) {
+
+            System.out.println("title:        " + i.getTitle());
+
+            System.out.println("release date: " + i.getReleaseDate());
+
+            System.out.println("duration:     " + i.getDuration());
+
+            System.out.println("score:        " + i.getScore());
+
+            System.out.print("director:     ");
+            for (Director j : i.getDirectors()) {
+                System.out.print(j.getName() + "  ");
+            }
+            System.out.println();
+
+            System.out.print("actors:       ");
+            for (Actor j : i.getActors()) {
+                System.out.print(j.getName() + "   ");
+            }
+            System.out.println();
+
+            System.out.print("genres:       ");
+            for (Genre j : i.getGenres()) {
+                System.out.print(j.getName() + "   ");
+            }
+            System.out.println();
+            System.out.println();
+        }
     }
 }

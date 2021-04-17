@@ -105,6 +105,7 @@ public class MovieDao {
                 String releaseDate = rows.getString("release_date");
                 int duration = rows.getInt("duration");
                 float score = rows.getFloat("score");
+
                 List<Genre> genres = new ArrayList<>();
                 List<Actor> actors = new ArrayList<>();
                 List<Director> directors = new ArrayList<>();
@@ -128,6 +129,7 @@ public class MovieDao {
                 while (actorRows.next()) {
                     actors.add(new Actor(id, actorRows.getString("full_name")));
                 }
+                    System.out.println();
 
                 stmtForDirector = conn.prepareStatement(sqlForDirector);
                 stmtForDirector.setString(1, id);

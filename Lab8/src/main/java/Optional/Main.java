@@ -25,8 +25,7 @@ public class Main {
         MovieDao movie = new MovieDao();
         List<Movie> movieList;
         movieList = movie.getAll();
-        movieList.forEach(m -> System.out.println(m.getTitle()));
-        System.out.println();
+        Movie.print(movieList);
 
         GenreDao genres = new GenreDao();
         List<Genre> genreList;
@@ -37,7 +36,7 @@ public class Main {
         System.out.println();
 
         DirectorDao directors = new DirectorDao();
-        List<Director> directorList = new ArrayList<>();
+        List<Director> directorList;
         directorList = directors.getAll();
 
         System.out.println("LIST OF ALL DIRECTORS: ");

@@ -1,2 +1,3 @@
+Am facut un video unde am explicat ce contine aplicatia si am aratat datele din baza de date : https://youtu.be/MJMh8ZhNxVc
 Optionalul este la src/main/java/Optional. Pachetul OOModels contine clase ce modeleaza
 datele din tabel iar pachetul DaoClasses contine clasele ce se ocupa de adaugarea si preluarea datelor din baza de date.

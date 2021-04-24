@@ -7,9 +7,10 @@ import java.util.Date;
 
 @Entity
 @Table(name = "movies")
-@NamedQueries({@NamedQuery(name = "Movie.findByName", query = "Select m from Movie m where m.title=:name")})
+@NamedQueries({@NamedQuery(name = "Movie.findByName", query = "Select m from Movie m where m.title=:name"),
+               @NamedQuery(name = "Movie.findAll", query = "Select m from Movie m")})
 
-public class Movie {
+public class Movie{
 
     public Movie(Integer id, String title, Date releaseDate, Integer duration, Float score) {
         this.id = id;
@@ -83,5 +84,6 @@ public class Movie {
     public void setScore(Float score) {
         this.score = score;
     }
+
 
 }

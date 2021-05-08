@@ -11,13 +11,13 @@ import java.util.Scanner;
 public class Client {
 
     public static void main(String[] args) {
-        String serverAdress = "127.0.0.1";
+        String serverAddress = "127.0.0.1";
         final int PORT = 8123;
         boolean exit = false;
 
         try {
 
-            Socket socket = new Socket(serverAdress, PORT);
+            Socket socket = new Socket(serverAddress, PORT);
 
             PrintWriter msgToServer = new PrintWriter(socket.getOutputStream(), true);
 
@@ -32,13 +32,13 @@ public class Client {
             while (!exit) {
                 userInput = scan.nextLine();
 
-                // scrie mesajul catre server
                 msgToServer.println(userInput);
 
-                // asteapta mesajul de la server si-l citeste cand ajunge
                 responseFromServer = inputFromServer.readLine();
 
-                if (responseFromServer.equals("exit") || responseFromServer.equals("Server stopped")) {
+                responseFromServer = responseFromServer.replace("/LNSEP/", System.lineSeparator());
+
+                if (responseFromServer.equals("exit") || responseFromServer.equals("Server stopped") || responseFromServer.equals("Time limit exceeded!")) {
                     exit = true;
                     System.out.println(responseFromServer);
                 } else {

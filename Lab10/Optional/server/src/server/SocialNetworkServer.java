@@ -21,8 +21,11 @@ public class SocialNetworkServer {
 
             while (serverRuns) {
                 System.out.println("Waiting for clients...");
+                System.out.println(onlineClients);
                 Socket socket = serverSocket.accept();
-                new ClientThread(socket, this).start();
+                clients.forEach(c -> System.out.println(c.getName()));
+                clients.add(new Client());
+                new ClientThread(socket, this, clients.get(clients.size() - 1)).start();
             }
 
         } catch (IOException e) {
@@ -32,10 +35,6 @@ public class SocialNetworkServer {
             }
             System.out.println("Server closed!");
         }
-    }
-
-    public synchronized void addClient(Client client) {
-        clients.add(client);
     }
 
     public synchronized List<Client> getClientList() {

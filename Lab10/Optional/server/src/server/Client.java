@@ -7,17 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 public class Client {
-    String name;
-    Socket socket;
+    String name = "";
     List<Client> friends = new ArrayList<>();
     Map<String, StringBuilder> messages = new HashMap<>();
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setSocket(Socket socket) {
-        this.socket = socket;
     }
 
     public void addFriend(Client friend) {
@@ -28,11 +23,14 @@ public class Client {
         messages.put(from, message);
     }
 
-    public String getMessages() {
-        String msgToClient = "";
+    public StringBuilder getMessages() {
+        StringBuilder msgToClient = new StringBuilder();
 
         for (Map.Entry<String, StringBuilder> entry : messages.entrySet()) {
-            msgToClient = entry.getKey() + ": " + entry.getValue() + "\n";
+            msgToClient.append(entry.getKey());
+            msgToClient.append(": ");
+            msgToClient.append(entry.getValue());
+            msgToClient.append("/LNSEP/");
         }
         return msgToClient;
     }

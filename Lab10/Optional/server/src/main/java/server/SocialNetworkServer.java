@@ -1,18 +1,16 @@
 package server;
 
-import guru.nidi.graphviz.engine.Format;
-import guru.nidi.graphviz.engine.Graphviz;
-import org.apache.batik.anim.dom.SVGDOMImplementation;
-import org.apache.batik.svggen.SVGGraphics2D;
-import org.apache.batik.svggen.SVGGraphics2DIOException;
+import com.mxgraph.layout.mxCircleLayout;
+import com.mxgraph.layout.mxIGraphLayout;
+import com.mxgraph.util.mxCellRenderer;
 import org.jgrapht.Graph;
+import org.jgrapht.ext.JGraphXAdapter;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
-import org.w3c.dom.DocumentType;
-import org.w3c.dom.Element;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -37,63 +35,40 @@ public class SocialNetworkServer {
                 System.out.println("Waiting for clients...");
                 System.out.println(onlineClients);
                 Socket socket = serverSocket.accept();
-                clients.forEach(c -> System.out.println(c.getName()));
                 clients.add(new Client());
                 new ClientThread(socket, this, clients.get(clients.size() - 1)).start();
             }
 
         } catch (IOException e) {
-//            e.printStackTrace();
+            e.printStackTrace();
             System.out.println(graph.toString());
             System.out.println();
-            
-            String svg = SVGDOMImplementation.SVG_NAMESPACE_URI;
-            DOMImplementation impl = SVGDOMImplementation.getDOMImplementation();
-            Document doc = impl.createDocument(svg, "svg", null);
-            Element svgRoot = doc.getDocumentElement();
 
-            svgRoot.setAttributeNS(null, "width", "600");
-            svgRoot.setAttributeNS(null, "height", "600");
-
-            int x1 = 100;
-            int y1 = 10;
-            for (Client client : graph.vertexSet()) {
-                Element text = doc.createElementNS(svg, "text");
-                text.setAttributeNS(null, "x", String.valueOf(x1));
-                text.setAttributeNS(null, "y", String.valueOf(y1));
-                text.setAttributeNS(null, "text", client.getName());
-
-                int x2 = x1 - 50;
-                int y2 = y1 + 50;
-
-                for (Client friend : client.getFriends()) {
-                    Element friendText = doc.createElementNS(svg, "text");
-                    friendText.setAttributeNS(null, "x", String.valueOf(x2));
-                    friendText.setAttributeNS(null, "y", String.valueOf(y2));
-                    friendText.setAttributeNS(null, "text", client.getName());
-
-                    x2 += 30;
-                    svgRoot.appendChild(friendText);
-                }
-
-                svgRoot.appendChild(text);
-                x1 += 300;
-
-                if (x1 >= 400) {
-                    x1 = 100;
-                    y1 += 100;
-                }
+            File myimg = new File("image0.png");
+            if(myimg.exists())
+            {
+                myimg.delete();
             }
+            try {
+                myimg.createNewFile();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+
+            JGraphXAdapter<Client, DefaultEdge> graphAdapter =
+                    new JGraphXAdapter<>(graph);
+            mxIGraphLayout layout = new mxCircleLayout(graphAdapter);
+            layout.execute(graphAdapter.getDefaultParent());
+
+            BufferedImage image =
+                    mxCellRenderer.createBufferedImage(graphAdapter, null, 2, Color.WHITE, true, null);
 
             try {
-                SVGGraphics2D svgGenerator = new SVGGraphics2D(doc);
-                Writer out = new OutputStreamWriter(System.out, "UTF-8");
-                svgGenerator.stream(out);
-            } catch (UnsupportedEncodingException unsupportedEncodingException) {
-                unsupportedEncodingException.printStackTrace();
-            } catch (SVGGraphics2DIOException svgGraphics2DIOException) {
-                svgGraphics2DIOException.printStackTrace();
+                ImageIO.write(image, "PNG", myimg);
+            } catch (IOException exception) {
+                exception.printStackTrace();
             }
+
             while (onlineClients > 0) {
                 System.out.println(onlineClients);
                 try {

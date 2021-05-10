@@ -11,20 +11,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="Maven: org.jgrapht:jgrapht-ext:1.5.1" level="project" />
     <orderEntry type="library" name="Maven: org.jgrapht:jgrapht-core:1.5.1" level="project" />
     <orderEntry type="library" name="Maven: org.jheaps:jheaps:0.13" level="project" />
-    <orderEntry type="library" name="Maven: guru.nidi:graphviz-java:0.18.1" level="project" />
-    <orderEntry type="library" name="Maven: org.webjars.npm:viz.js-graphviz-java:2.1.3" level="project" />
-    <orderEntry type="library" name="Maven: guru.nidi.com.kitfox:svgSalamander:1.1.3" level="project" />
-    <orderEntry type="library" name="Maven: net.arnx:nashorn-promise:0.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.commons:commons-exec:1.3" level="project" />
-    <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:3.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:jcl-over-slf4j:1.7.30" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:jul-to-slf4j:1.7.30" level="project" />
-    <orderEntry type="library" name="Maven: guru.nidi.com.eclipsesource.j2v8:j2v8_win32_x86_64:4.6.0" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.30" level="project" />
-    <orderEntry type="library" name="Maven: ch.qos.logback:logback-classic:1.2.3" level="project" />
-    <orderEntry type="library" name="Maven: ch.qos.logback:logback-core:1.2.3" level="project" />
-    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="Maven: com.github.vlsi.mxgraph:jgraphx:4.1.0" level="project" />
   </component>
 </module>

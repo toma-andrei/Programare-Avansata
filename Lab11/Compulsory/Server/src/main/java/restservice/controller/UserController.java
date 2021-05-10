@@ -24,10 +24,11 @@ public class UserController {
     }
 
     @PostMapping
-    public Person create(@RequestParam String name) {
+    public ResponseEntity<String> create(@RequestParam String name) {
         Person pers = new Person();
         pers.setName(name);
-        return repository.save(pers);
+        repository.save(pers);
+        return new ResponseEntity<>(pers.getName() + " was added successfully", HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{personsId}")
@@ -39,13 +40,13 @@ public class UserController {
     @PutMapping(path = "/{id}")
     public ResponseEntity<String> update(@RequestParam String name, @PathVariable Integer id) throws BadHttpRequest {
         if (repository.exists(id)) {
-           Person person = repository.findOne(id);
-           person.setName(name);
-           repository.save(person);
+            Person person = repository.findOne(id);
+            person.setName(name);
+            repository.save(person);
         } else {
             throw new BadHttpRequest();
         }
         return new ResponseEntity<>(
-                "Person updated successsfully", HttpStatus.OK);
+                "Person updated successfully", HttpStatus.OK);
     }
 }

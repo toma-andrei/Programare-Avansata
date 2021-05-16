@@ -1,20 +1,24 @@
 package entities;
 
+import jdk.jfr.Name;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
 @NamedQueries({@NamedQuery(name = "User.findById", query = "Select u from User u where u.id=:id"),
-               @NamedQuery(name = "User.findByUsername", query ="Select u from User u where u.username=:username")})
+        @NamedQuery(name = "User.findByUsername", query = "Select u from User u where u.username=:username"),
+        @NamedQuery(name = "User.correctLogin", query = "Select u from User u where u.username=:username and u.password=:password")})
 public class User {
 
-    public User(){
+    public User() {
         addComment = 1;
         addSong = 1;
         admin = 0;
     }
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
@@ -27,11 +31,11 @@ public class User {
     private String password;
 
     @Basic(optional = true)
-    @Column(name = "addSong")
+    @Column(name = "add_song")
     private Integer addSong;
 
     @Basic(optional = true)
-    @Column(name = "addComment")
+    @Column(name = "add_comment")
     private Integer addComment;
 
     @Basic(optional = true)

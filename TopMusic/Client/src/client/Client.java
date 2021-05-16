@@ -15,7 +15,7 @@ public class Client {
      * <p>
      * register username password
      * login username password
-     * add song "songName" "songDescription" "Artist1,Artist2" "link"
+     * add song "songName" "songDescription" "Artist1,Artist2" "genre1,genre2" "link"
      * add comment idSong "comment"
      * top general
      * top for "genre"
@@ -50,18 +50,13 @@ public class Client {
             while (!exit) {
                 userInput = scan.nextLine();
 
-                // scrie mesajul catre server
                 msgToServer.println(userInput);
+                msgToServer.flush();
 
-                // asteapta mesajul de la server si-l citeste cand ajunge
-//                responseFromServer = inputFromServer.readLine();
-//
-//                if (responseFromServer.equals("exit") || responseFromServer.equals("Server stopped")) {
-//                    exit = true;
-//                    System.out.println(responseFromServer);
-//                } else {
-//                    System.out.println(responseFromServer);
-//                }
+                responseFromServer = inputFromServer.readLine();
+
+                System.out.println(responseFromServer);
+                System.out.println();
             }
         } catch (UnknownHostException e) {
             e.printStackTrace();

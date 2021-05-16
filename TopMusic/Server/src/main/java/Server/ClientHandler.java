@@ -1,6 +1,10 @@
 package Server;
 
+import entities.Genre;
+import entities.Song;
 import entities.User;
+import org.hibernate.loader.plan.build.internal.CascadeStyleLoadPlanBuildingAssociationVisitationStrategy;
+import repositories.SongRepository;
 import repositories.UserRepository;
 
 import java.io.BufferedReader;
@@ -14,6 +18,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class ClientHandler implements Runnable {
     private final Socket socket;
+    private boolean loggedIn = false;
 
     public ClientHandler(Socket socket) {
         this.socket = socket;
@@ -28,11 +33,12 @@ public class ClientHandler implements Runnable {
             String[] splitCommand = new String[0];
             StringBuilder answer = new StringBuilder("");
             UserRepository userRepo = new UserRepository();
+            SongRepository songRepo = new SongRepository();
 
             do {
                 userCommand = clientInput.readLine();
                 splitCommand = userCommand.split(" (?=([^\"]*\"[^\"]*\")*[^\"]*$)");
-
+                System.out.println(userCommand);
                 if (splitCommand[0].equals("register")) {
                     if (splitCommand.length == 3) {
                         if (!UserRepository.usernameExists(splitCommand[1])) {
@@ -41,13 +47,61 @@ public class ClientHandler implements Runnable {
                             user.setPassword(generateHashedPassword(splitCommand[2]));
                             userRepo.create(user);
                             answer.append("Congratulations, your account has been successfully created.");
-                        }
-                        else{
+                        } else {
                             answer.append("This username is already taken. Please choose another name.");
                         }
+                    } else {
+                        answer.append("Please use syntax \"register <username> <password>\".");
+                    }
+                } else if (splitCommand[0].equals("login")) {
+                    if (splitCommand.length == 3) {
+                        if (userRepo.correctLoginInput(splitCommand[1], generateHashedPassword(splitCommand[2]))) {
+                            answer.append("Login Successful.");
+                            loggedIn = true;
+                        } else {
+                            answer.append("Wrong username or password.");
+                        }
+                    } else {
+                        answer.append("Please use syntax \"login <username> <password>\".");
+                    }
+                } else if (!loggedIn) {
+                    answer.append("You are not logged in.");
+                } else if (splitCommand[0].equals("add")) {
+                    if (splitCommand[1].equals("song")) {
+                        if (splitCommand.length == 7) {
+                            String songName = splitCommand[2];
+                            String songDescription = splitCommand[3];
+                            String artists = splitCommand[4];
+                            String[] genres = splitCommand[5].split(",");
+                            String link = splitCommand[6];
+
+                            Song song = new Song();
+                            song.setId(TopMusicServer.getSongId());
+                            song.setName(songName);
+                            song.setDescription(songDescription);
+                            song.setArtists(artists);
+                            song.setLink(link);
+
+                            for (String genre : genres) {
+                                Genre gen = new Genre();
+                                gen.setIdSong(song.getId());
+                                gen.setName(genre.trim());
+                                song.addGen(gen);
+                            }
+
+                            songRepo.create(song);
+
+                        } else {
+                            answer.append("Please use syntax \"add song <\"songName\"> <\"songDescription\"> <\"Artist1,Artist2,..\"> <\"genre1,genre2,..\"> <\"link\">.");
+
+                        }
+                    } else if (splitCommand[1].equals("comment")) {
+
                     }
                 }
-
+                msgToClient.println(answer);
+                msgToClient.flush();
+                answer.delete(0, answer.length());
             } while (!splitCommand[0].equals("exit"));
 
         } catch (IOException e) {

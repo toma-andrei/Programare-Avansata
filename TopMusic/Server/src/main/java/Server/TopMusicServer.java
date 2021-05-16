@@ -15,6 +15,7 @@ public class TopMusicServer {
     ServerSocket serverSocket = null;
     ThreadPoolExecutor executor;
     int noOfThreads = 100;
+    static int songId = 1;
 
     public TopMusicServer() {
         try {
@@ -26,16 +27,19 @@ public class TopMusicServer {
                 if (executor.getActiveCount() < noOfThreads) {
                     executor.execute(new ClientHandler(socket));
                 } else {
-                    System.out.println("nu am loc acolo!");
                     Thread t = new Thread(new ClientHandler(socket));
                     t.start();
                 }
-
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static synchronized int getSongId() {
+        songId++;
+        return songId-1;
     }
 
     public static void main(String[] args) {

@@ -23,4 +23,9 @@ public class UserRepository {
         EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
         return em.createNamedQuery("User.findByUsername").setParameter("username", username).getResultList().size() == 1;
     }
+
+    public boolean correctLoginInput(String username, String password){
+        EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
+        return em.createNamedQuery("User.correctLogin").setParameter("username", username).setParameter("password", password).getResultList().size() == 1;
+    }
 }

@@ -13,9 +13,9 @@ public class Client {
     /**
      * Commands be like:
      * <p>
-     * register username password
-     * login username password
-     * add song "songName" "songDescription" "Artist1,Artist2" "genre1,genre2" "link"
+     * register username password                                                           DONE
+     * login username password                                                              DONE
+     * add song "songName" "songDescription" "Artist1,Artist2" "genre1,genre2" "link"       DONE
      * add comment idSong "comment"
      * top general
      * top for "genre"

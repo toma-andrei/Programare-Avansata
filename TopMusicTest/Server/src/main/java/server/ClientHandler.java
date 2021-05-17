@@ -1,10 +1,8 @@
-package Server;
+package server;
 
-import daoClasses.SongDao;
 import entities.Genre;
 import entities.Song;
 import entities.User;
-import org.hibernate.loader.plan.build.internal.CascadeStyleLoadPlanBuildingAssociationVisitationStrategy;
 import repositories.SongRepository;
 import repositories.UserRepository;
 
@@ -33,9 +31,7 @@ public class ClientHandler implements Runnable {
             String userCommand = "";
             String[] splitCommand = new String[0];
             StringBuilder answer = new StringBuilder("");
-            UserRepository userRepo = new UserRepository();
-            SongRepository songRepo = new SongRepository();
-            SongDao songDao = new SongDao();
+            UserRepository repository;
 
             do {
                 userCommand = clientInput.readLine();
@@ -78,6 +74,7 @@ public class ClientHandler implements Runnable {
                             String link = splitCommand[6];
 
                             Song song = new Song();
+                            song.setId(TopMusicServer.getSongId());
                             song.setName(songName);
                             song.setDescription(songDescription);
                             song.setArtists(artists);
@@ -85,30 +82,19 @@ public class ClientHandler implements Runnable {
 
                             for (String genre : genres) {
                                 Genre gen = new Genre();
-                                gen.setName(genre.trim().replace("\"", ""));
-                                song.addGen(gen);
+                                gen.setIdSong(song.getId());
+                                gen.setName(genre.trim());
+//                                song.addGen(gen);
                             }
 
-                            if (songDao.create(song)) {
-                                answer.append("Song added successfully.");
-                            } else {
-                                answer.append("Song could not be added.");
-                            }
+                            songRepo.create(song);
+
                         } else {
-                            answer.append("Please use syntax \"add song <\"songName\"> <\"songDescription\"> <\"Artist1,Artist2,..\"> <\"genre1,genre2,..\"> <\"link\">\".");
+                            answer.append("Please use syntax \"add song <\"songName\"> <\"songDescription\"> <\"Artist1,Artist2,..\"> <\"genre1,genre2,..\"> <\"link\">.");
+
                         }
                     } else if (splitCommand[1].equals("comment")) {
 
-                    }
-                } else if (splitCommand[0].equals("top")) {
-
-                    if (splitCommand[1].equals("general")) {
-
-                    } else if (splitCommand[1].equals("for")) {
-
-                    }
-                    else{
-                        answer.append("Please use syntax \"top general\" OR \"top for <\"genre\">.");
                     }
                 }
                 msgToClient.println(answer);

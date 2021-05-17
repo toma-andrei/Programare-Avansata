@@ -25,13 +25,8 @@ public class Song {
     @Column(name = "link")
     private String link;
 
-    @Column
-    private Integer votes;
-
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_song")
-
-
+    @JoinColumn(name="id_song")
     private List<Genre> genreList = new ArrayList<>();
 
     public void addGen(Genre gen) {
@@ -63,10 +58,6 @@ public class Song {
         return genreList;
     }
 
-    public Integer getVotes() {
-        return votes;
-    }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -91,7 +82,4 @@ public class Song {
         this.genreList = genreList;
     }
 
-    public void setVotes(Integer votes) {
-        this.votes = votes;
-    }
 }

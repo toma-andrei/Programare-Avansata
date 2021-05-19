@@ -54,7 +54,7 @@ public class Client {
                 msgToServer.flush();
 
                 responseFromServer = inputFromServer.readLine();
-
+                responseFromServer.replace("/LNSEP/", System.lineSeparator());
                 System.out.println(responseFromServer);
                 System.out.println();
             }

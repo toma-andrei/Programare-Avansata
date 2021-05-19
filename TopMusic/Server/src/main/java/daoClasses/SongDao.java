@@ -1,6 +1,7 @@
 package daoClasses;
 
 import daoClasses.databaseConnection.DatabaseConnection;
+import entities.Artist;
 import entities.Genre;
 import entities.Song;
 
@@ -19,7 +20,7 @@ public class SongDao {
             e.printStackTrace();
         }
 
-        String sql = "INSERT INTO songs(name, description, artists, link) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO songs(name, description, link) VALUES(?,?,?)";
 
         String maxId = "SELECT max(id) id FROM songs";
 
@@ -27,14 +28,13 @@ public class SongDao {
 
         PreparedStatement stmt = null;
 
-        int songId = -1;
+        int songId;
         try {
             stmt = conn.prepareStatement(sql);
 
             stmt.setString(1, song.getName());
             stmt.setString(2, song.getDescription());
-            stmt.setString(3, song.getArtists());
-            stmt.setString(4, song.getLink());
+            stmt.setString(3, song.getLink());
 
             stmt.execute();
 
@@ -53,7 +53,7 @@ public class SongDao {
             return false;
         }
 
-        sql = "INSERT INTO genres(id_song, gen_name) VALUES(?,?)";
+        sql = "INSERT INTO genres(id_song, name) VALUES(?,?)";
 
         try {
             for (Genre gen : song.getGenreList()) {
@@ -64,29 +64,48 @@ public class SongDao {
 
                 stmt.execute();
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
+
+        sql = "INSERT INTO artists(id_song, name) VALUES(?,?)";
+
+        try {
+            for (Artist artist : song.getArtistList()) {
+                stmt = conn.prepareStatement(sql);
+
+                stmt.setInt(1, songId);
+                stmt.setString(2, artist.getName());
+
+                stmt.execute();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
         return true;
     }
 
     public synchronized List<Song> getByVotes() {
         try {
             conn = DatabaseConnection.getInstance().getConnection();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         String sqlForSongs = "SELECT * FROM songs s ORDER BY votes";
-        String sqlForGenres = "SELECT name from genre where id_song=:id_song";
 
         List<Song> songList = new ArrayList<>();
 
         PreparedStatement stmtForSongs;
-        PreparedStatement stmtForGenres;
+
         ResultSet songSet;
-        ResultSet genreSet;
+        ResultSet artistSet;
+
+        GenreDao genreDao = new GenreDao();
+        ArtistDao artistDao = new ArtistDao();
 
         try {
             stmtForSongs = conn.prepareStatement(sqlForSongs);
@@ -98,27 +117,18 @@ public class SongDao {
                 song.setId(songSet.getInt("id"));
                 song.setName(songSet.getString("name"));
                 song.setDescription(songSet.getString("description"));
-                song.setArtists(songSet.getString("artists"));
                 song.setVotes(songSet.getInt("votes"));
+                song.setAddedBy(songSet.getInt("addedBy"));
                 song.setLink(songSet.getString("link"));
+                song.setGenreList(genreDao.findById(song.getId(), conn));
+                song.setArtistList(artistDao.findById(song.getId(), conn));
 
-                stmtForGenres = conn.prepareStatement(sqlForGenres);
-
-                stmtForGenres.setInt(1, song.getId());
-
-                genreSet = stmtForGenres.executeQuery();
-
-                while (genreSet.next()) {
-                    Genre gen = new Genre();
-                    gen.setName(genreSet.getString("name"));
-                    song.addGen();
-                }
-
+                songList.add(song);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        return songList;
     }
 }

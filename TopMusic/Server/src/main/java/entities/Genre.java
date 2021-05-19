@@ -11,7 +11,7 @@ public class Genre {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idSong;
 
-    @Column(name = "gen_name")
+    @Column(name = "name")
     public String name;
 
     public String getName() {

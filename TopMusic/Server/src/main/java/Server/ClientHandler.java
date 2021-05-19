@@ -1,9 +1,11 @@
 package Server;
 
 import daoClasses.SongDao;
+import entities.Artist;
 import entities.Genre;
 import entities.Song;
 import entities.User;
+import formatter.SongFormatter;
 import org.hibernate.loader.plan.build.internal.CascadeStyleLoadPlanBuildingAssociationVisitationStrategy;
 import repositories.SongRepository;
 import repositories.UserRepository;
@@ -16,10 +18,12 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 public class ClientHandler implements Runnable {
     private final Socket socket;
     private boolean loggedIn = false;
+    private User user;
 
     public ClientHandler(Socket socket) {
         this.socket = socket;
@@ -71,17 +75,22 @@ public class ClientHandler implements Runnable {
                 } else if (splitCommand[0].equals("add")) {
                     if (splitCommand[1].equals("song")) {
                         if (splitCommand.length == 7) {
-                            String songName = splitCommand[2];
-                            String songDescription = splitCommand[3];
-                            String artists = splitCommand[4];
+                            String songName = splitCommand[2].replace("\"", "");
+                            String songDescription = splitCommand[3].replace("\"", "");
+                            String[] artists = splitCommand[4].split(",");
                             String[] genres = splitCommand[5].split(",");
-                            String link = splitCommand[6];
+                            String link = splitCommand[6].replace("\"", "");
 
                             Song song = new Song();
                             song.setName(songName);
                             song.setDescription(songDescription);
-                            song.setArtists(artists);
                             song.setLink(link);
+
+                            for (String art : artists) {
+                                Artist artist = new Artist();
+                                artist.setName(art);
+                                song.addArtist(artist);
+                            }
 
                             for (String genre : genres) {
                                 Genre gen = new Genre();
@@ -104,10 +113,14 @@ public class ClientHandler implements Runnable {
 
                     if (splitCommand[1].equals("general")) {
 
+                        List<Song> songList;
+                        songList = songDao.getByVotes();
+                        SongFormatter songFormatter = new SongFormatter();
+                        answer.append(songFormatter.format(songList));
+
                     } else if (splitCommand[1].equals("for")) {
 
-                    }
-                    else{
+                    } else {
                         answer.append("Please use syntax \"top general\" OR \"top for <\"genre\">.");
                     }
                 }

@@ -20,7 +20,7 @@ public class SongDao {
             e.printStackTrace();
         }
 
-        String sql = "INSERT INTO songs(name, description, link) VALUES(?,?,?)";
+        String sql = "INSERT INTO songs(name, description, link, addedBy) VALUES(?,?,?,?)";
 
         String maxId = "SELECT max(id) id FROM songs";
 
@@ -35,6 +35,7 @@ public class SongDao {
             stmt.setString(1, song.getName());
             stmt.setString(2, song.getDescription());
             stmt.setString(3, song.getLink());
+            stmt.setString(4, song.getAddedBy());
 
             stmt.execute();
 
@@ -118,7 +119,7 @@ public class SongDao {
                 song.setName(songSet.getString("name"));
                 song.setDescription(songSet.getString("description"));
                 song.setVotes(songSet.getInt("votes"));
-                song.setAddedBy(songSet.getInt("addedBy"));
+                song.setAddedBy(String.valueOf(songSet.getInt("addedBy")));
                 song.setLink(songSet.getString("link"));
                 song.setGenreList(genreDao.findById(song.getId(), conn));
                 song.setArtistList(artistDao.findById(song.getId(), conn));

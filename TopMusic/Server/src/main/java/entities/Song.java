@@ -26,7 +26,7 @@ public class Song {
     private String link;
 
     @Column(name = "addedBy")
-    private Integer addedBy;
+    private String addedBy;
 
     @Column
     private Integer votes;
@@ -53,7 +53,7 @@ public class Song {
         return name;
     }
 
-    public Integer getAddedBy() {
+    public String getAddedBy() {
         return addedBy;
     }
 
@@ -93,7 +93,7 @@ public class Song {
         this.id = id;
     }
 
-    public void setAddedBy(Integer addedBy) {
+    public void setAddedBy(String addedBy) {
         this.addedBy = addedBy;
     }
 

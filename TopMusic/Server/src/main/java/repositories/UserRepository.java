@@ -19,6 +19,11 @@ public class UserRepository {
         return (User) em.createNamedQuery("User.findById").setParameter("id", id).getSingleResult();
     }
 
+    public User findByName(String name){
+        EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
+        return (User) em.createNamedQuery("User.findByUsername").setParameter("username", name).getSingleResult();
+    }
+
     public static boolean usernameExists(String username){
         EntityManager em = EntityManagerSingleton.getInstance().getEntityManager();
         return em.createNamedQuery("User.findByUsername").setParameter("username", username).getResultList().size() == 1;

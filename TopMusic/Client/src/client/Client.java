@@ -18,7 +18,7 @@ public class Client {
      * add song "songName" "songDescription" "Artist1,Artist2" "genre1,genre2" "link"       DONE
      * add comment idSong "comment"                                                         DONE
      * top general                                                                          DONE
-     * top for "genre"
+     * top for "genre"                                                                      DONE
      * comments for songId
      * ***  ADMIN   ***
      * restrict votes for userId

@@ -133,15 +133,14 @@ public class SongDao {
         return songList;
     }
 
-    public synchronized List<Song> getForGenre(){
+    public synchronized List<Song> getForGenre(String gen) {
         try {
             conn = DatabaseConnection.getInstance().getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        String sqlForSongs = "SELECT * FROM songs s inner join genres g on s.id=g.id_song where g.name=\'?\' ORDER BY votes";
-
+        String sqlForSongs = "SELECT * FROM songs s inner join genres g on s.id=g.id_song where g.name=? ORDER BY votes";
         List<Song> songList = new ArrayList<>();
 
         PreparedStatement stmtForSongs;
@@ -154,7 +153,8 @@ public class SongDao {
 
         try {
             stmtForSongs = conn.prepareStatement(sqlForSongs);
-
+            System.out.println(gen);
+            stmtForSongs.setString(1, gen);
             songSet = stmtForSongs.executeQuery();
 
             while (songSet.next()) {
@@ -170,10 +170,35 @@ public class SongDao {
 
                 songList.add(song);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return songList;
+    }
+
+    public synchronized Song findById(String id) {
+        try {
+            conn = DatabaseConnection.getInstance().getConnection();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        String sql = "Select name from songs where id = ?";
+
+        PreparedStatement stmt;
+        ResultSet songSet;
+        Song song = new Song();
+
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, id);
+            songSet = stmt.executeQuery();
+            songSet.next();
+            song.setName(songSet.getString("name"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return song;
     }
 }

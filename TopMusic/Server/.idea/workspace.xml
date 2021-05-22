@@ -9,12 +9,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/ClientHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/commands/UserOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/UserOperation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/daoClasses/ArtistDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daoClasses/ArtistDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/daoClasses/GenreDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daoClasses/GenreDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/daoClasses/CommentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daoClasses/CommentDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/daoClasses/SongDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daoClasses/SongDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/formatter/SongFormatter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/formatter/SongFormatter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/repositories/GenreRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/repositories/SongRepository.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

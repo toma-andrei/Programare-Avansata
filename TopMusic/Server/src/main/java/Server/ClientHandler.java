@@ -78,12 +78,16 @@ public class ClientHandler implements Runnable {
 
                     } else if (splitCommand[1].equals("for")) {
 
-                        answer.append(commandExecutor.executeOperation(new TopGeneral(new UserOperation(splitCommand))));
+                        answer.append(commandExecutor.executeOperation(new TopForGenre(new UserOperation(splitCommand))));
                     } else {
 
                         answer.append("Please use syntax \"top general\" OR \"top for <\"genre\">.");
 
                     }
+                } else if (splitCommand[0].equals("comments")) {
+
+                    answer.append(commandExecutor.executeOperation((new GetComments(new UserOperation(splitCommand)))));
+
                 }
                 msgToClient.println(answer);
                 msgToClient.flush();

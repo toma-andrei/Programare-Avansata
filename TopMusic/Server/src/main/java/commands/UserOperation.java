@@ -3,12 +3,14 @@ package commands;
 import daoClasses.CommentDao;
 import daoClasses.SongDao;
 import entities.*;
+import formatter.CommentFormatter;
 import formatter.SongFormatter;
 import repositories.UserRepository;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserOperation {
@@ -92,11 +94,22 @@ public class UserOperation {
         comment.setSongId(Integer.valueOf(splitCommand[2]));
         comment.setComment(splitCommand[3]);
 
-        if(commentDao.create(comment)){
+        if (commentDao.create(comment)) {
             return "Comment added.";
-        }else{
+        } else {
             return "Couldn't add comment.";
         }
+    }
+
+    public String getComments() {
+        CommentDao commentDao = new CommentDao();
+
+        List<Comment> commentList;
+        commentList = commentDao.findBySongId(splitCommand[2]);
+
+        CommentFormatter formatter = new CommentFormatter();
+
+        return formatter.format(commentList, splitCommand[2]).toString();
     }
 
     public String getGeneralTop() {
@@ -108,10 +121,10 @@ public class UserOperation {
         return songFormatter.format(songList).toString();
     }
 
-    public String getGenreTop(){
+    public String getGenreTop() {
         SongDao songDao = new SongDao();
         List<Song> songList;
-        songList = songDao.getForGenre();
+        songList = songDao.getForGenre(splitCommand[2].replace("\"", ""));
         SongFormatter songFormatter = new SongFormatter();
 
         return songFormatter.format(songList).toString();

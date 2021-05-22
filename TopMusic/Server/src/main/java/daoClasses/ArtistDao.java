@@ -14,7 +14,7 @@ public class ArtistDao {
 
     public List<Artist> findById(Integer id, Connection conn) {
 
-        String sqlForArtists = "Select name from artists where id_song=:id_song";
+        String sqlForArtists = "Select name from artists where id_song=?";
 
         PreparedStatement stmtForArtists;
         ResultSet artistSet;

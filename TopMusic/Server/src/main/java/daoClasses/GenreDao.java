@@ -14,7 +14,7 @@ public class GenreDao {
 
     public List<Genre> findById(Integer id, Connection conn) {
 
-        String sqlForGenres = "SELECT name from genre where id_song=:id_song";
+        String sqlForGenres = "SELECT name from genres where id_song=?";
 
         PreparedStatement stmtForGenres;
         ResultSet genreSet;

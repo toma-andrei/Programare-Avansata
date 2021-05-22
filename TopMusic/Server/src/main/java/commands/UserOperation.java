@@ -1,10 +1,8 @@
 package commands;
 
+import daoClasses.CommentDao;
 import daoClasses.SongDao;
-import entities.Artist;
-import entities.Genre;
-import entities.Song;
-import entities.User;
+import entities.*;
 import formatter.SongFormatter;
 import repositories.UserRepository;
 
@@ -86,10 +84,34 @@ public class UserOperation {
         }
     }
 
+    public String addComment() {
+        CommentDao commentDao = new CommentDao();
+
+        Comment comment = new Comment();
+        comment.setUsername(splitCommand[0]);
+        comment.setSongId(Integer.valueOf(splitCommand[2]));
+        comment.setComment(splitCommand[3]);
+
+        if(commentDao.create(comment)){
+            return "Comment added.";
+        }else{
+            return "Couldn't add comment.";
+        }
+    }
+
     public String getGeneralTop() {
         SongDao songDao = new SongDao();
         List<Song> songList;
         songList = songDao.getByVotes();
+        SongFormatter songFormatter = new SongFormatter();
+
+        return songFormatter.format(songList).toString();
+    }
+
+    public String getGenreTop(){
+        SongDao songDao = new SongDao();
+        List<Song> songList;
+        songList = songDao.getForGenre();
         SongFormatter songFormatter = new SongFormatter();
 
         return songFormatter.format(songList).toString();

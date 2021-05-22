@@ -18,7 +18,7 @@ public class SongFormatter {
             output.append("Votes: ").append(song.getVotes()).append("/LNSEP/");
             output.append("Genres: ");
 
-            int spaces = 0;
+            int spaces = 1;
             for (Genre gen : song.getGenreList()) {
                 if (spaces < song.getGenreList().size())
                     output.append(gen.getName()).append("/LNSEP/").append("        ");
@@ -27,7 +27,7 @@ public class SongFormatter {
                 spaces++;
             }
 
-            spaces = 0;
+            spaces = 1;
             output.append("Artists: ");
             for (Artist artist : song.getArtistList()) {
                 if (spaces < song.getArtistList().size())

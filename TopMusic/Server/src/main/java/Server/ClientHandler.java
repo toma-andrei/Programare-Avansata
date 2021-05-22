@@ -1,14 +1,7 @@
 package Server;
 
 import commands.*;
-import daoClasses.SongDao;
-import entities.Artist;
-import entities.Genre;
-import entities.Song;
 import entities.User;
-import formatter.SongFormatter;
-import org.hibernate.loader.plan.build.internal.CascadeStyleLoadPlanBuildingAssociationVisitationStrategy;
-import repositories.SongRepository;
 import repositories.UserRepository;
 
 import java.io.BufferedReader;
@@ -16,16 +9,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
 
 public class ClientHandler implements Runnable {
     private final Socket socket;
     private boolean loggedIn = false;
     private User user;
-    private int currentUserId;
 
     public ClientHandler(Socket socket) {
         this.socket = socket;
@@ -59,7 +47,7 @@ public class ClientHandler implements Runnable {
 
                     if (answer.toString().contains("Success")) {
                         loggedIn = true;
-                        currentUserId = userRepo.findByName(splitCommand[1]).getId();
+                        user = userRepo.findByName(splitCommand[1]);
                     }
 
                 } else if (!loggedIn) {
@@ -69,35 +57,8 @@ public class ClientHandler implements Runnable {
                 } else if (splitCommand[0].equals("add")) {
                     if (splitCommand[1].equals("song")) {
                         if (splitCommand.length == 7) {
-//                            String songName = splitCommand[2].replace("\"", "");
-//                            String songDescription = splitCommand[3].replace("\"", "");
-//                            String[] artists = splitCommand[4].split(",");
-//                            String[] genres = splitCommand[5].split(",");
-//                            String link = splitCommand[6].replace("\"", "");
-//
-//                            Song song = new Song();
-//                            song.setName(songName);
-//                            song.setDescription(songDescription);
-//                            song.setLink(link);
-//
-//                            for (String art : artists) {
-//                                Artist artist = new Artist();
-//                                artist.setName(art);
-//                                song.addArtist(artist);
-//                            }
-//
-//                            for (String genre : genres) {
-//                                Genre gen = new Genre();
-//                                gen.setName(genre.trim().replace("\"", ""));
-//                                song.addGen(gen);
-//                            }
-//
-//                            if (songDao.create(song)) {
-//                                answer.append("Song added successfully.");
-//                            } else {
-//                                answer.append("Song could not be added.");
-//                            }
-                            splitCommand[0] = String.valueOf(currentUserId);
+
+                            splitCommand[0] = String.valueOf(user.getId());
                             answer.append(commandExecutor.executeOperation(new AddSong(new UserOperation(splitCommand))));
 
                         } else {
@@ -106,7 +67,8 @@ public class ClientHandler implements Runnable {
 
                         }
                     } else if (splitCommand[1].equals("comment")) {
-
+                        splitCommand[0] = user.getUsername();
+                        answer.append(commandExecutor.executeOperation(new AddComment(new UserOperation(splitCommand))));
                     }
                 } else if (splitCommand[0].equals("top")) {
 
@@ -116,8 +78,7 @@ public class ClientHandler implements Runnable {
 
                     } else if (splitCommand[1].equals("for")) {
 
-                        //TODO implementation
-
+                        answer.append(commandExecutor.executeOperation(new TopGeneral(new UserOperation(splitCommand))));
                     } else {
 
                         answer.append("Please use syntax \"top general\" OR \"top for <\"genre\">.");

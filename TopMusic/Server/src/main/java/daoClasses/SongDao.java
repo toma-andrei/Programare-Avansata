@@ -77,7 +77,7 @@ public class SongDao {
                 stmt = conn.prepareStatement(sql);
 
                 stmt.setInt(1, songId);
-                stmt.setString(2, artist.getName());
+                stmt.setString(2, artist.getName().replace("\"", ""));
 
                 stmt.execute();
             }
@@ -97,6 +97,50 @@ public class SongDao {
         }
 
         String sqlForSongs = "SELECT * FROM songs s ORDER BY votes";
+
+        List<Song> songList = new ArrayList<>();
+
+        PreparedStatement stmtForSongs;
+
+        ResultSet songSet;
+        ResultSet artistSet;
+
+        GenreDao genreDao = new GenreDao();
+        ArtistDao artistDao = new ArtistDao();
+
+        try {
+            stmtForSongs = conn.prepareStatement(sqlForSongs);
+
+            songSet = stmtForSongs.executeQuery();
+
+            while (songSet.next()) {
+                Song song = new Song();
+                song.setId(songSet.getInt("id"));
+                song.setName(songSet.getString("name"));
+                song.setDescription(songSet.getString("description"));
+                song.setVotes(songSet.getInt("votes"));
+                song.setAddedBy(String.valueOf(songSet.getInt("addedBy")));
+                song.setLink(songSet.getString("link"));
+                song.setGenreList(genreDao.findById(song.getId(), conn));
+                song.setArtistList(artistDao.findById(song.getId(), conn));
+
+                songList.add(song);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return songList;
+    }
+
+    public synchronized List<Song> getForGenre(){
+        try {
+            conn = DatabaseConnection.getInstance().getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String sqlForSongs = "SELECT * FROM songs s inner join genres g on s.id=g.id_song where g.name=\'?\' ORDER BY votes";
 
         List<Song> songList = new ArrayList<>();
 

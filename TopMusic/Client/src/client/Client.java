@@ -16,8 +16,8 @@ public class Client {
      * register username password                                                           DONE
      * login username password                                                              DONE
      * add song "songName" "songDescription" "Artist1,Artist2" "genre1,genre2" "link"       DONE
-     * add comment idSong "comment"
-     * top general
+     * add comment idSong "comment"                                                         DONE
+     * top general                                                                          DONE
      * top for "genre"
      * comments for songId
      * ***  ADMIN   ***
@@ -54,7 +54,7 @@ public class Client {
                 msgToServer.flush();
 
                 responseFromServer = inputFromServer.readLine();
-                responseFromServer.replace("/LNSEP/", System.lineSeparator());
+                responseFromServer = responseFromServer.replace("/LNSEP/", System.lineSeparator());
                 System.out.println(responseFromServer);
                 System.out.println();
             }

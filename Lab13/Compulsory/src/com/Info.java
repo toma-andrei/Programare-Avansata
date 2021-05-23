@@ -15,12 +15,8 @@ public class Info {
 
         StringBuilder answer = new StringBuilder(new MessageFormat(pattern).format(arguments)).append("\n");
 
-        if (Locale.getDefault().toString().equals("ro")) {
-            answer.append("Country: ").append("România").append("\n");
-        } else {
-            answer.append("Country: ").append(Locale.getDefault().getDisplayCountry()).append("\n");
-        }
-
+        answer.append("Country: ").append(Locale.getDefault().getDisplayCountry()).append("\n");
+        answer.append("Currency: ").append(Currency.getInstance(Locale.getDefault())).append("\n");
         answer.append("Language: ").append(Locale.getDefault().getDisplayLanguage()).append("\n");
         answer.append("Week Days: ").append(Arrays.toString(new DateFormatSymbols(Locale.getDefault()).getWeekdays()).replace("[,", "").replace("]", "")).append("\n");
         answer.append("Months: ").append(Arrays.toString(new DateFormatSymbols(Locale.getDefault()).getMonths()).replace("[", "").replace(", ]", "")).append("\n");

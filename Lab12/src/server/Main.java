@@ -2,45 +2,29 @@ package server;
 
 import org.testng.annotations.Test;
 
-import javax.swing.text.ViewFactory;
+import java.io.File;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class Main {
+    List<String> classList = new ArrayList<>();
 
     public static void main(String[] args) throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        URLClassLoader loader = URLClassLoader.newInstance(new URL[]{new URL("file:///C:/Users/toma1/OneDrive/Documents/GitHub/Programare-Avansata/Lab12/out/production/Lab12/server/Test/")});
-        Class clazz = loader.loadClass("server.test.MyProgram");
 
-        System.out.print("Package name: ");
-        System.out.println(clazz.getPackageName());
+        String path = "C:\\Users\\toma1\\OneDrive\\Documents\\GitHub\\Programare-Avansata\\Lab12\\out\\production\\Lab12\\server\\test\\";
+        String basePath = "C:\\Users\\toma1\\OneDrive\\Documents\\GitHub\\Programare-Avansata\\Lab12\\out\\production\\Lab12\\";
 
-        System.out.print("Class name: ");
-        System.out.println(clazz.getName());
+        Resolver resolver = new Resolver();
+        resolver.resolve(path, basePath);
 
-        System.out.print("Class fields: ");
-        System.out.println(Arrays.toString(clazz.getDeclaredFields()));
-
-        System.out.print("Class methods: ");
-        System.out.println(Arrays.toString(clazz.getMethods()));
-
-        Method[] methods = clazz.getMethods();
-
-        Object object = clazz.getConstructor().newInstance();
-
-        for(Method method : methods){
-            Annotation[] annotations = method.getAnnotations();
-
-            for(Annotation annotation : annotations){
-                if(annotation instanceof Test && method.getParameterCount() == 0){
-                    method.invoke(object);
-                }
-            }
-        }
     }
 }

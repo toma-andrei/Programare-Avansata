@@ -1,6 +1,8 @@
-package commands;
+package commands.userCommands;
 
-public class TopGeneral implements Operation{
+import commands.Operation;
+
+public class TopGeneral implements Operation {
 
     UserOperation userOp;
 

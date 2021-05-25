@@ -1,6 +1,10 @@
 package Server;
 
 import commands.*;
+import commands.adminCommands.RestrictComment;
+import commands.adminCommands.RestrictSongAdd;
+import commands.adminCommands.RestrictVote;
+import commands.userCommands.*;
 import entities.User;
 import repositories.UserRepository;
 
@@ -88,7 +92,20 @@ public class ClientHandler implements Runnable {
 
                     answer.append(commandExecutor.executeOperation((new GetComments(new UserOperation(splitCommand)))));
 
+                } else if (!user.getAdmin().equals(0)) {
+                        if(splitCommand[0].equals("restrict")){
+                            if(splitCommand[1].equals("votes")){
+                                answer.append(commandExecutor.executeOperation(new RestrictVote(new AdminOperation(splitCommand))));
+                            }
+                            else if(splitCommand[1].equals("comments")){
+                                answer.append(commandExecutor.executeOperation(new RestrictComment(new AdminOperation(splitCommand))));
+                            }
+                            else if(splitCommand[1].equals("songAdd")){
+                                answer.append(commandExecutor.executeOperation(new RestrictSongAdd(new AdminOperation(splitCommand))));
+                            }
+                        }
                 }
+
                 msgToClient.println(answer);
                 msgToClient.flush();
                 answer.delete(0, answer.length());

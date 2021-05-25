@@ -1,6 +1,8 @@
-package commands;
+package commands.userCommands;
 
-public class AddComment implements Operation{
+import commands.Operation;
+
+public class AddComment implements Operation {
 
     UserOperation userOp;
 

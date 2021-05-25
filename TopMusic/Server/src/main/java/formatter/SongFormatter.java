@@ -14,20 +14,7 @@ public class SongFormatter {
         for (Song song : songList) {
             output.append(song.getId()).append(".");
             output.append("Song name: ").append(song.getName()).append("/LNSEP/");
-            output.append("Description: ").append(song.getDescription()).append("/LNSEP/");
-            output.append("Votes: ").append(song.getVotes()).append("/LNSEP/");
-            output.append("Genres: ");
-
             int spaces = 1;
-            for (Genre gen : song.getGenreList()) {
-                if (spaces < song.getGenreList().size())
-                    output.append(gen.getName()).append("/LNSEP/").append("        ");
-                else
-                    output.append(gen.getName()).append("/LNSEP/");
-                spaces++;
-            }
-
-            spaces = 1;
             output.append("Artists: ");
             for (Artist artist : song.getArtistList()) {
                 if (spaces < song.getArtistList().size())
@@ -36,6 +23,19 @@ public class SongFormatter {
                     output.append(artist.getName()).append("/LNSEP/");
                 spaces++;
             }
+            output.append("Description: ").append(song.getDescription()).append("/LNSEP/");
+            output.append("Votes: ").append(song.getVotes()).append("/LNSEP/");
+            output.append("Genres: ");
+
+            spaces = 1;
+            for (Genre gen : song.getGenreList()) {
+                if (spaces < song.getGenreList().size())
+                    output.append(gen.getName()).append("/LNSEP/").append("        ");
+                else
+                    output.append(gen.getName()).append("/LNSEP/");
+                spaces++;
+            }
+
 
             output.append("Added by: ").append(song.getAddedBy()).append("/LNSEP/");
             output.append("Link: ").append(song.getLink()).append("/LNSEP/");

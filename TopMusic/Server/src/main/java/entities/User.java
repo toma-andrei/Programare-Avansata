@@ -15,6 +15,7 @@ public class User {
         addComment = 1;
         addSong = 1;
         admin = 0;
+        vote = 1;
     }
 
     @Id
@@ -29,6 +30,10 @@ public class User {
     @Basic(optional = false)
     @Column(name = "password")
     private String password;
+
+    @Basic(optional = true)
+    @Column(name = "vote")
+    private Integer vote;
 
     @Basic(optional = true)
     @Column(name = "add_song")
@@ -50,6 +55,10 @@ public class User {
         return addSong;
     }
 
+    public Integer getVote() {
+        return vote;
+    }
+
     public Integer getAdmin() {
         return admin;
     }
@@ -68,6 +77,10 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public void setVote(Integer vote) {
+        this.vote = vote;
     }
 
     public void setAddComment(Integer addComment) {

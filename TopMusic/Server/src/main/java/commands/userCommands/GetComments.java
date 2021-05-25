@@ -1,6 +1,8 @@
-package commands;
+package commands.userCommands;
 
-public class GetComments implements Operation{
+import commands.Operation;
+
+public class GetComments implements Operation {
     UserOperation userOp;
 
     public GetComments(UserOperation operation){

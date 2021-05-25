@@ -1,4 +1,4 @@
-package commands;
+package commands.userCommands;
 
 import daoClasses.CommentDao;
 import daoClasses.SongDao;
@@ -102,6 +102,11 @@ public class UserOperation {
     }
 
     public String getComments() {
+
+        if (splitCommand.length < 3) {
+            return "Please use syntax \"comments for <\"genre_name\">\".";
+        }
+
         CommentDao commentDao = new CommentDao();
 
         List<Comment> commentList;

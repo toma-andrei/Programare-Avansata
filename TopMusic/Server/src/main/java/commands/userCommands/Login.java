@@ -1,6 +1,8 @@
-package commands;
+package commands.userCommands;
 
-public class Login implements Operation{
+import commands.Operation;
+
+public class Login implements Operation {
 
     UserOperation userOp;
 

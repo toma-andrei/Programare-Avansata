@@ -19,10 +19,10 @@ public class Client {
      * add comment idSong "comment"                                                         DONE
      * top general                                                                          DONE
      * top for "genre"                                                                      DONE
-     * comments for songId
+     * comments for songId                                                                  DONE
      * ***  ADMIN   ***
-     * restrict votes for userId
-     * restrict comments for userId
+     * restrict vote for userId
+     * restrict comment for userId
      * restrict songAdd for userId
      * delete song songId
      * delete comment commentId

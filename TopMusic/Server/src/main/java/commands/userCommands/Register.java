@@ -1,6 +1,8 @@
-package commands;
+package commands.userCommands;
 
-public class Register implements Operation{
+import commands.Operation;
+
+public class Register implements Operation {
     UserOperation userOp;
 
     public Register(UserOperation operation){

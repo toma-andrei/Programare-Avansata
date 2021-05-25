@@ -1,6 +1,8 @@
-package commands;
+package commands.userCommands;
 
-public class AddSong implements Operation{
+import commands.Operation;
+
+public class AddSong implements Operation {
 
     UserOperation userOp;
 

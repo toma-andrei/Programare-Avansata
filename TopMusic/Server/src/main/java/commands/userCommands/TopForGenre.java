@@ -1,7 +1,9 @@
-package commands;
+package commands.userCommands;
 
 
-public class TopForGenre implements Operation{
+import commands.Operation;
+
+public class TopForGenre implements Operation {
     UserOperation userOp;
 
     public TopForGenre(UserOperation operation){

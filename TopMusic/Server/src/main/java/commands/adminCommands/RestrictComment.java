@@ -1,6 +1,5 @@
 package commands.adminCommands;
 
-import commands.AdminOperation;
 import commands.Operation;
 
 public class RestrictComment implements Operation {

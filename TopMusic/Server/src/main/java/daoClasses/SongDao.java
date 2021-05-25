@@ -5,6 +5,7 @@ import entities.Artist;
 import entities.Genre;
 import entities.Song;
 
+import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -179,8 +180,8 @@ public class SongDao {
     public synchronized Song findById(String id) {
         try {
             conn = DatabaseConnection.getInstance().getConnection();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         String sql = "Select name from songs where id = ?";
@@ -200,5 +201,39 @@ public class SongDao {
         }
 
         return song;
+    }
+
+    public synchronized boolean deleteSong(String id) {
+        try {
+            conn = DatabaseConnection.getInstance().getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String sql = "DELETE FROM songs WHERE id=?";
+
+        PreparedStatement stmt;
+
+        try {
+            //delete comments, genres, artist and song
+            CommentDao commentDao = new CommentDao();
+            commentDao.deleteBySongId(id, conn);
+
+            GenreDao genreDao = new GenreDao();
+            genreDao.deleteBySongId(id, conn);
+
+            ArtistDao artistDao = new ArtistDao();
+            artistDao.deleteBySongId(id, conn);
+
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, id);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 }

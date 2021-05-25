@@ -5,20 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b4320b8-b71e-43ca-bb0e-1c13634cac28" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../Lab12/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lab12/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Client/src/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/client/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/AddComment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/userCommands/AddComment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/AddSong.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/userCommands/AddSong.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/GetComments.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/userCommands/GetComments.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/userCommands/Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/Register.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/userCommands/Register.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/TopForGenre.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/userCommands/TopForGenre.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/TopGeneral.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/userCommands/TopGeneral.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/UserOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/userCommands/UserOperation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/formatter/SongFormatter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/formatter/SongFormatter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/AdminOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/adminCommands/AdminOperation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/adminCommands/RestrictComment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/adminCommands/RestrictComment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/adminCommands/RestrictSongAdd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/adminCommands/RestrictSongAdd.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/adminCommands/RestrictVote.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/adminCommands/RestrictVote.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/daoClasses/ArtistDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daoClasses/ArtistDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/daoClasses/CommentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daoClasses/CommentDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/daoClasses/GenreDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daoClasses/GenreDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/daoClasses/SongDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daoClasses/SongDao.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

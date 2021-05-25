@@ -1,8 +1,6 @@
 package commands.adminCommands;
 
-import commands.AdminOperation;
 import commands.Operation;
-import commands.userCommands.UserOperation;
 
 public class RestrictVote implements Operation {
     AdminOperation adminOp;

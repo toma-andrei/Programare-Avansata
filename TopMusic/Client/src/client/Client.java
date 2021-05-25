@@ -21,11 +21,11 @@ public class Client {
      * top for "genre"                                                                      DONE
      * comments for songId                                                                  DONE
      * ***  ADMIN   ***
-     * restrict vote for userId
-     * restrict comment for userId
-     * restrict songAdd for userId
-     * delete song songId
-     * delete comment commentId
+     * restrict vote for userId                                                             DONE
+     * restrict comment for userId                                                          DONE
+     * restrict songAdd for userId                                                          DONE
+     * delete song songId                                                                   DONE
+     * delete comment commentId                                                             DONE
      */
 
     public static void main(String[] args) {

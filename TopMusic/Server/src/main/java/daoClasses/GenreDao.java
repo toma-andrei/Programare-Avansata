@@ -38,4 +38,20 @@ public class GenreDao {
 
         return genreList;
     }
+
+    public boolean deleteBySongId(String songId, Connection conn) {
+        String sqlGenre = "DELETE FROM genres WHERE id_song=?";
+        PreparedStatement stmt;
+        try {
+            stmt = conn.prepareStatement(sqlGenre);
+            stmt.setString(1, songId);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
 }

@@ -1,5 +1,7 @@
-package commands;
+package commands.adminCommands;
 
+import daoClasses.CommentDao;
+import daoClasses.SongDao;
 import entities.User;
 import repositories.UserRepository;
 
@@ -46,7 +48,7 @@ public class AdminOperation {
         return "Comments restricted for user " + user.getUsername();
     }
 
-    public String restrictSongAdd(){
+    public String restrictSongAdd() {
         if (splitCommand.length != 4) {
             return "Please use syntax \"restrict songAdd for <\"userId\">\".";
         }
@@ -62,5 +64,40 @@ public class AdminOperation {
         }
 
         return "Adding songs restricted for user " + user.getUsername();
+    }
+
+    public String deleteSong(String id) {
+        SongDao songDao = new SongDao();
+        if (songDao.deleteSong(id)) {
+
+            return "Song was deleted successfully";
+        }
+        return "Song could not be deleted";
+    }
+
+    public String deleteComment() {
+        if (splitCommand.length != 3) {
+            return "Please use syntax \"delete comment <comment_id>\"";
+        }
+        CommentDao commentDao = new CommentDao();
+        if (commentDao.deleteById(splitCommand[2])) {
+            return "Comment deleted successfully";
+        }
+
+        return "Couldn't delete comment";
+    }
+
+    public String deleteSong() {
+        if (splitCommand.length != 3) {
+            return "Please use syntax \"delete song <comment_id>\"";
+        }
+
+        SongDao songDao = new SongDao();
+
+        if (songDao.deleteSong(splitCommand[2])) {
+            return "Song deleted successfully.";
+        }
+
+        return "Song couldn't be deleted.";
     }
 }

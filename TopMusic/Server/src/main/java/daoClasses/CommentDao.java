@@ -4,6 +4,7 @@ import daoClasses.databaseConnection.DatabaseConnection;
 import entities.Comment;
 import entities.Song;
 
+import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -70,7 +71,7 @@ public class CommentDao {
                 Comment comment = new Comment();
 
                 stmt = conn.prepareStatement(commentWriter);
-                stmt.setString(1,id);
+                stmt.setString(1, id);
                 usernameSet = stmt.executeQuery();
                 usernameSet.next();
 
@@ -87,5 +88,42 @@ public class CommentDao {
         }
 
         return commentList;
+    }
+
+
+    public boolean deleteBySongId(String songId, Connection conn) {
+        String sqlComments = "DELETE FROM comments WHERE id_song=?";
+        PreparedStatement stmt;
+        try {
+            stmt = conn.prepareStatement(sqlComments);
+            stmt.setString(1, songId);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public synchronized boolean deleteById(String id) {
+        try {
+            conn = DatabaseConnection.getInstance().getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String sql = "DELETE FROM comments WHERE id=?";
+        PreparedStatement stmt;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, id);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

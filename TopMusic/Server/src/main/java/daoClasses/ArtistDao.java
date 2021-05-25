@@ -32,11 +32,26 @@ public class ArtistDao {
                 artist.setName(artistSet.getString("name"));
                 artistList.add(artist);
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         return artistList;
+    }
+
+    public boolean deleteBySongId(String songId, Connection conn) {
+        String sqlArtists = "DELETE FROM artists WHERE id_song=?";
+        PreparedStatement stmt;
+        try {
+            stmt = conn.prepareStatement(sqlArtists);
+            stmt.setString(1, songId);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }
 

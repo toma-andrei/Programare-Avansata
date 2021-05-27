@@ -77,6 +77,7 @@ public class CommentDao {
 
                 username = usernameSet.getString("username");
                 comment.setSongId(comments.getInt("id_song"));
+                comment.setId(comments.getInt("id"));
 
                 comment.setUsername(username);
                 comment.setComment(comments.getString("comment"));

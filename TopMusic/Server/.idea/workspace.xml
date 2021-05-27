@@ -5,17 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b4320b8-b71e-43ca-bb0e-1c13634cac28" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Client/src/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/client/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/AdminOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/adminCommands/AdminOperation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/adminCommands/RestrictComment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/adminCommands/RestrictComment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/adminCommands/RestrictSongAdd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/adminCommands/RestrictSongAdd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/commands/adminCommands/RestrictVote.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/adminCommands/RestrictVote.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/daoClasses/ArtistDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daoClasses/ArtistDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/adminCommands/AdminOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/adminCommands/AdminOperation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/userCommands/UserOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/userCommands/UserOperation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/daoClasses/CommentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daoClasses/CommentDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/daoClasses/GenreDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daoClasses/GenreDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/daoClasses/SongDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daoClasses/SongDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entities/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/Comment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/formatter/CommentFormatter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/formatter/CommentFormatter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/formatter/SongFormatter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/formatter/SongFormatter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +49,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Client" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -63,6 +61,7 @@
       <recent name="C:\Users\toma1\OneDrive\Documents\GitHub\Programare-Avansata\TopMusic\Server\src\main\resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\toma1\OneDrive\Documents\GitHub\Programare-Avansata\TopMusic\Server\src\main\resources" />
       <recent name="C:\Users\toma1\OneDrive\Documents\GitHub\Programare-Avansata\TopMusic\Server\src\main\resources\META-INF" />
     </key>
   </component>

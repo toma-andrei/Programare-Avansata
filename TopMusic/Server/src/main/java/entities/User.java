@@ -23,6 +23,9 @@ public class User {
     @Column(name = "id")
     private Integer id;
 
+    @Column(name="locale")
+    private String locale;
+
     @Basic(optional = false)
     @Column(name = "username")
     private String username;
@@ -51,6 +54,10 @@ public class User {
         return addComment;
     }
 
+    public String getLocale() {
+        return locale;
+    }
+
     public Integer getAddSong() {
         return addSong;
     }
@@ -77,6 +84,10 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
     }
 
     public void setVote(Integer vote) {

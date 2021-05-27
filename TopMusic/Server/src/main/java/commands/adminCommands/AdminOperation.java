@@ -5,16 +5,21 @@ import daoClasses.SongDao;
 import entities.User;
 import repositories.UserRepository;
 
+import java.util.ResourceBundle;
+
 public class AdminOperation {
     String[] splitCommand;
+    String configFile = "res.Messages";
+    ResourceBundle messages = ResourceBundle.getBundle(configFile);
 
     public AdminOperation(String[] splitCommand) {
         this.splitCommand = splitCommand;
     }
 
     public String restrictVote() {
+
         if (splitCommand.length != 4) {
-            return "Please use syntax \"restrict vote for <\"userId\">\".";
+            return messages.getString("wrongSyntax") + " \"restrict vote for <\"userId\">\".";
         }
 
         User user = null;
@@ -24,15 +29,16 @@ public class AdminOperation {
             user.setVote(0);
             userRepo.create(user);
         } catch (Exception e) {
-            return "Vote couldn't be restricted.";
+            return messages.getString("voteNotRestricted");
         }
 
-        return "Vote restricted for user " + user.getUsername();
+        return messages.getString("voteRestricted") + " " + user.getUsername();
     }
 
     public String restrictComment() {
+
         if (splitCommand.length != 4) {
-            return "Please use syntax \"restrict comments for <\"userId\">\".";
+            return messages.getString("wrongSyntax") + " \"restrict comments for <\"userId\">\".";
         }
 
         User user = null;
@@ -42,15 +48,15 @@ public class AdminOperation {
             user.setAddComment(0);
             userRepo.create(user);
         } catch (Exception e) {
-            return "Comments couldn't be restricted.";
+            return messages.getString("commNotRestricted");
         }
 
-        return "Comments restricted for user " + user.getUsername();
+        return messages.getString("commRestricted") + " " + user.getUsername();
     }
 
     public String restrictSongAdd() {
         if (splitCommand.length != 4) {
-            return "Please use syntax \"restrict songAdd for <\"userId\">\".";
+            return messages.getString("wrongSyntax") + " \"restrict songAdd for <\"userId\">\".";
         }
 
         User user = null;
@@ -60,44 +66,45 @@ public class AdminOperation {
             user.setAddSong(0);
             userRepo.create(user);
         } catch (Exception e) {
-            return "Adding songs couldn't be restricted.";
+            return messages.getString("songAddNotRestricted");
         }
 
-        return "Adding songs restricted for user " + user.getUsername();
+        return messages.getString("songAddRestricted") + " " + user.getUsername();
     }
 
-    public String deleteSong(String id) {
-        SongDao songDao = new SongDao();
-        if (songDao.deleteSong(id)) {
-
-            return "Song was deleted successfully";
-        }
-        return "Song could not be deleted";
-    }
+//    public String deleteSong(String id) {
+//        SongDao songDao = new SongDao();
+//        if (songDao.deleteSong(id)) {
+//
+//
+//        }
+//        return messages.getString("songNotDeleted");
+//    }
 
     public String deleteComment() {
         if (splitCommand.length != 3) {
-            return "Please use syntax \"delete comment <comment_id>\"";
+            return messages.getString("wrongSyntax") + " \"delete comment <comment_id>\"";
         }
         CommentDao commentDao = new CommentDao();
         if (commentDao.deleteById(splitCommand[2])) {
-            return "Comment deleted successfully";
+            return messages.getString("commDeleted");
         }
 
-        return "Couldn't delete comment";
+        return messages.getString("commNotDeleted");
     }
 
     public String deleteSong() {
         if (splitCommand.length != 3) {
-            return "Please use syntax \"delete song <comment_id>\"";
+            return messages.getString("wrongSyntax") + " \"delete song <comment_id>\"";
         }
 
         SongDao songDao = new SongDao();
 
         if (songDao.deleteSong(splitCommand[2])) {
-            return "Song deleted successfully.";
+            return messages.getString("songDeleted");
         }
 
-        return "Song couldn't be deleted.";
+        return messages.getString("songNotDeleted");
+
     }
 }

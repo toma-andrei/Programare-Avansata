@@ -5,17 +5,18 @@ import entities.Genre;
 import entities.Song;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class SongFormatter {
 
-    public StringBuilder format(List<Song> songList) {
+    public StringBuilder format(List<Song> songList, ResourceBundle messages) {
         StringBuilder output = new StringBuilder("");
 
         for (Song song : songList) {
             output.append(song.getId()).append(".");
-            output.append("Song name: ").append(song.getName()).append("/LNSEP/");
+            output.append(messages.getString("songName")).append(": ").append(song.getName()).append("/LNSEP/");
             int spaces = 1;
-            output.append("Artists: ");
+            output.append(messages.getString("artists")).append(": ");
             for (Artist artist : song.getArtistList()) {
                 if (spaces < song.getArtistList().size())
                     output.append(artist.getName()).append("/LNSEP/").append("         ");
@@ -23,9 +24,9 @@ public class SongFormatter {
                     output.append(artist.getName()).append("/LNSEP/");
                 spaces++;
             }
-            output.append("Description: ").append(song.getDescription()).append("/LNSEP/");
-            output.append("Votes: ").append(song.getVotes()).append("/LNSEP/");
-            output.append("Genres: ");
+            output.append(messages.getString("description")).append(": ").append(song.getDescription()).append("/LNSEP/");
+            output.append(messages.getString("votes")).append(": ").append(song.getVotes()).append("/LNSEP/");
+            output.append(messages.getString("genres")).append(": ");
 
             spaces = 1;
             for (Genre gen : song.getGenreList()) {
@@ -37,8 +38,9 @@ public class SongFormatter {
             }
 
 
-            output.append("Added by: ").append(song.getAddedBy()).append("/LNSEP/");
-            output.append("Link: ").append(song.getLink()).append("/LNSEP/");
+            output.append(messages.getString("addedBy")).append(": ").append(song.getAddedBy()).append("/LNSEP/");
+            output.append(messages.getString("link")).append(": ").append(song.getLink()).append("/LNSEP/");
+
         }
 
         return output;

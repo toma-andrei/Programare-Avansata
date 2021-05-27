@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ResourceBundle;
 
 public class ClientHandler implements Runnable {
     private final Socket socket;
@@ -25,6 +26,12 @@ public class ClientHandler implements Runnable {
         try {
             BufferedReader clientInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter msgToClient = new PrintWriter(socket.getOutputStream());
+            String configFile = "res.Messages";
+            ResourceBundle messages = null;
+
+            if (loggedIn) {
+                messages = ResourceBundle.getBundle(configFile);
+            }
 
             String userCommand = "";
             String[] splitCommand;
@@ -44,17 +51,29 @@ public class ClientHandler implements Runnable {
 
                 } else if (splitCommand[0].equals("login")) {
 
-                    answer.append(commandExecutor.executeOperation(new Login(new UserOperation(splitCommand))));
+                    String englishAnswer = commandExecutor.executeOperation(new Login(new UserOperation(splitCommand)));
 
-
-                    if (answer.toString().contains("Success")) {
+                    if (englishAnswer.contains("Success")) {
                         loggedIn = true;
                         user = userRepo.findByName(splitCommand[1]);
+                        SetLocale.set(user.getLocale());
+
+                        messages = ResourceBundle.getBundle(configFile);
+
+                        answer.append(messages.getString("loginSuccessful"));
+
+                    } else if (englishAnswer.contains("Wrong")){
+                        messages = ResourceBundle.getBundle(configFile);
+
+                        answer.append(messages.getString("wrongInput"));
+                    }
+                    else{
+                        answer.append(messages.getString("wrongSyntax")).append(" \"login <username> <password>\".");
                     }
 
                 } else if (!loggedIn) {
 
-                    answer.append("You are not logged in.");
+                    answer.append(messages.getString("notLoggedIn"));
 
                 } else if (splitCommand[0].equals("add")) {
                     if (splitCommand[1].equals("song")) {
@@ -64,8 +83,7 @@ public class ClientHandler implements Runnable {
                             answer.append(commandExecutor.executeOperation(new AddSong(new UserOperation(splitCommand))));
 
                         } else {
-
-                            answer.append("Please use syntax \"add song <\"songName\"> <\"songDescription\"> <\"Artist1,Artist2,..\"> <\"genre1,genre2,..\"> <\"link\">\".");
+                            answer.append(messages.getString("wrongSyntax")).append(" \"add song <\"songName\"> <\"songDescription\"> <\"Artist1,Artist2,..\"> <\"genre1,genre2,..\"> <\"link\">\".");
 
                         }
                     } else if (splitCommand[1].equals("comment")) {
@@ -82,8 +100,7 @@ public class ClientHandler implements Runnable {
 
                         answer.append(commandExecutor.executeOperation(new TopForGenre(new UserOperation(splitCommand))));
                     } else {
-
-                        answer.append("Please use syntax \"top general\" OR \"top for <\"genre\">.");
+                        answer.append(messages.getString("wrongSyntax")).append(" \"top general\" OR \"top for <\"genre\">.");
 
                     }
                 } else if (splitCommand[0].equals("comments")) {
@@ -93,11 +110,19 @@ public class ClientHandler implements Runnable {
                 } else if (!user.getAdmin().equals(0)) {
                     if (splitCommand[0].equals("restrict")) {
                         if (splitCommand[1].equals("votes")) {
+
                             answer.append(commandExecutor.executeOperation(new RestrictVote(new AdminOperation(splitCommand))));
+
                         } else if (splitCommand[1].equals("comments")) {
+
                             answer.append(commandExecutor.executeOperation(new RestrictComment(new AdminOperation(splitCommand))));
+
                         } else if (splitCommand[1].equals("songAdd")) {
+
                             answer.append(commandExecutor.executeOperation(new RestrictSongAdd(new AdminOperation(splitCommand))));
+
+                        } else {
+                            answer.append(messages.getString("wrongSyntax")).append(" \"restrict votes|comments|songAdd for user_id\"");
                         }
                     } else if (splitCommand[0].equals("delete")) {
                         if (splitCommand[1].equals("song")) {

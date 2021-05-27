@@ -1,12 +1,17 @@
 package entities;
 
 public class Comment {
+    private int id;
     private String comment;
     private int songId;
     private String username;
 
     public String getUsername() {
         return username;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setUsername(String username) {
@@ -17,8 +22,12 @@ public class Comment {
         return songId;
     }
 
-    public void setSongId(Integer songId) {
+    public void setSongId(int songId) {
         this.songId = songId;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getComment() {

@@ -6,12 +6,13 @@ import entities.*;
 import formatter.CommentFormatter;
 import formatter.SongFormatter;
 import repositories.UserRepository;
+import Server.SetLocale;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class UserOperation {
 
@@ -23,19 +24,29 @@ public class UserOperation {
 
     public String register() {
         UserRepository userRepo = new UserRepository();
-        if (splitCommand.length == 3) {
-            if (!UserRepository.usernameExists(splitCommand[1])) {
-                User user = new User();
-                user.setUsername(splitCommand[1]);
-                user.setPassword(generateHashedPassword(splitCommand[2]));
-                userRepo.create(user);
-                return "Congratulations, your account has been successfully created.";
-            } else {
-                return "This username is already taken. Please choose another name.";
-            }
-        } else {
-            return "Please use syntax \"register <username> <password>\".";
+        ResourceBundle messages = null;
+
+        if (splitCommand.length != 4) {
+            return messages.getString("wrongSyntax") + " \"register <username> <password>\".";
         }
+
+        SetLocale.set(splitCommand[3]);
+        messages = ResourceBundle.getBundle("res.Messages");
+
+        if (!UserRepository.usernameExists(splitCommand[1])) {
+
+            User user = new User();
+            user.setUsername(splitCommand[1]);
+            user.setPassword(generateHashedPassword(splitCommand[2]));
+            user.setLocale(splitCommand[3]);
+            userRepo.create(user);
+
+            return messages.getString("registerSuccess");
+
+        } else {
+            return messages.getString("usernameExist");
+        }
+
     }
 
     public String login() {
@@ -78,16 +89,21 @@ public class UserOperation {
             gen.setName(genre.trim().replace("\"", ""));
             song.addGen(gen);
         }
-
+        ResourceBundle message = ResourceBundle.getBundle("res.Messages");
         if (songDao.create(song)) {
-            return "Song added successfully.";
+
+            return message.getString("songAddedSuccess");
         } else {
-            return "Song could not be added.";
+            return message.getString("songAddedFails");
         }
     }
 
     public String addComment() {
         CommentDao commentDao = new CommentDao();
+        ResourceBundle message = ResourceBundle.getBundle("res.Messages");
+        if (splitCommand.length != 4) {
+            return message.getString("wrongSyntax") + (" \"add comment <id_song> <\"comment\">\".");
+        }
 
         Comment comment = new Comment();
         comment.setUsername(splitCommand[0]);
@@ -95,16 +111,17 @@ public class UserOperation {
         comment.setComment(splitCommand[3]);
 
         if (commentDao.create(comment)) {
-            return "Comment added.";
+            return message.getString("commentAdded");
         } else {
-            return "Couldn't add comment.";
+            return message.getString("commentNotAdded");
         }
     }
 
     public String getComments() {
+        ResourceBundle message = ResourceBundle.getBundle("res.Messages");
 
         if (splitCommand.length < 3) {
-            return "Please use syntax \"comments for <\"genre_name\">\".";
+            return message.getString("wrongSyntax") + " \"comments for <\"genre_name\">\".";
         }
 
         CommentDao commentDao = new CommentDao();
@@ -114,7 +131,7 @@ public class UserOperation {
 
         CommentFormatter formatter = new CommentFormatter();
 
-        return formatter.format(commentList, splitCommand[2]).toString();
+        return formatter.format(commentList, splitCommand[2], message).toString();
     }
 
     public String getGeneralTop() {
@@ -122,8 +139,9 @@ public class UserOperation {
         List<Song> songList;
         songList = songDao.getByVotes();
         SongFormatter songFormatter = new SongFormatter();
-
-        return songFormatter.format(songList).toString();
+        String configFile = "res.Messages";
+        ResourceBundle messages = ResourceBundle.getBundle(configFile);
+        return songFormatter.format(songList, messages).toString();
     }
 
     public String getGenreTop() {
@@ -132,7 +150,10 @@ public class UserOperation {
         songList = songDao.getForGenre(splitCommand[2].replace("\"", ""));
         SongFormatter songFormatter = new SongFormatter();
 
-        return songFormatter.format(songList).toString();
+        String configFile = "res.Messages";
+        ResourceBundle messages = ResourceBundle.getBundle(configFile);
+
+        return songFormatter.format(songList, messages).toString();
     }
 
     private String generateHashedPassword(String cleanPassword) {

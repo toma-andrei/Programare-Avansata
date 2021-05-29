@@ -5,6 +5,7 @@ import daoClasses.SongDao;
 import entities.User;
 import repositories.UserRepository;
 
+import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 public class AdminOperation {
@@ -106,5 +107,25 @@ public class AdminOperation {
 
         return messages.getString("songNotDeleted");
 
+    }
+
+    public String addAdmin() {
+        if (splitCommand.length != 2) {
+            return messages.getString("wrongSyntax") + " \"addAdmin <user_id>\"";
+        }
+
+        User user = null;
+
+        try {
+            UserRepository userRepo = new UserRepository();
+            user = userRepo.findById(Integer.parseInt(splitCommand[1]));
+            user.setAdmin(1);
+            userRepo.create(user);
+        } catch (Exception e) {
+            return messages.getString("adminNotAdded");
+        }
+        String pattern = messages.getString("adminAdded");
+        Object[] arguments = {user.getUsername()};
+        return new MessageFormat(pattern).format(arguments);
     }
 }

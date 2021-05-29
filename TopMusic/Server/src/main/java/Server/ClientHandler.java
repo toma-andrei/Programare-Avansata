@@ -35,6 +35,7 @@ public class ClientHandler implements Runnable {
             List<String> adminCommands = new ArrayList<>();
             adminCommands.add("restrict");
             adminCommands.add("delete");
+            adminCommands.add("addAdmin");
 
             if (loggedIn) {
                 messages = ResourceBundle.getBundle(configFile);
@@ -143,6 +144,8 @@ public class ClientHandler implements Runnable {
                         } else if (splitCommand[1].equals("comment")) {
                             answer.append(commandExecutor.executeOperation(new DeleteComment(new AdminOperation(splitCommand))));
                         }
+                    } else if (splitCommand[0].equals("addAdmin")) {
+                        answer.append(commandExecutor.executeOperation(new AddAdmin(new AdminOperation(splitCommand))));
                     } else {
                         answer.append(messages.getString("unknownCommand"));
                     }

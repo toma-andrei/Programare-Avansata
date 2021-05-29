@@ -24,14 +24,13 @@ public class UserOperation {
 
     public String register() {
         UserRepository userRepo = new UserRepository();
-        ResourceBundle messages = null;
+        ResourceBundle messages = ResourceBundle.getBundle("res.Messages");
 
         if (splitCommand.length != 4) {
-            return messages.getString("wrongSyntax") + " \"register <username> <password>\".";
+            return messages.getString("wrongSyntax") + " \"register <username> <password> <ro-RO / en-US>\".";
         }
 
         SetLocale.set(splitCommand[3]);
-        messages = ResourceBundle.getBundle("res.Messages");
 
         if (!UserRepository.usernameExists(splitCommand[1])) {
 
@@ -39,14 +38,14 @@ public class UserOperation {
             user.setUsername(splitCommand[1]);
             user.setPassword(generateHashedPassword(splitCommand[2]));
             user.setLocale(splitCommand[3]);
+            SetLocale.set(splitCommand[3]);
             userRepo.create(user);
-
+            messages = ResourceBundle.getBundle("res.Messages");
             return messages.getString("registerSuccess");
 
         } else {
             return messages.getString("usernameExist");
         }
-
     }
 
     public String login() {
@@ -80,13 +79,13 @@ public class UserOperation {
 
         for (String art : artists) {
             Artist artist = new Artist();
-            artist.setName(art);
+            artist.setName(art.trim());
             song.addArtist(artist);
         }
 
         for (String genre : genres) {
             Genre gen = new Genre();
-            gen.setName(genre.trim().replace("\"", ""));
+            gen.setName(genre.trim().replace("\"", "").trim());
             song.addGen(gen);
         }
         ResourceBundle message = ResourceBundle.getBundle("res.Messages");

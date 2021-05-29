@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ClientHandler implements Runnable {
@@ -27,7 +30,11 @@ public class ClientHandler implements Runnable {
             BufferedReader clientInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter msgToClient = new PrintWriter(socket.getOutputStream());
             String configFile = "res.Messages";
-            ResourceBundle messages = null;
+            ResourceBundle messages = ResourceBundle.getBundle(configFile);
+
+            List<String> adminCommands = new ArrayList<>();
+            adminCommands.add("restrict");
+            adminCommands.add("delete");
 
             if (loggedIn) {
                 messages = ResourceBundle.getBundle(configFile);
@@ -44,8 +51,9 @@ public class ClientHandler implements Runnable {
                 userCommand = clientInput.readLine();
                 splitCommand = userCommand.split(" (?=([^\"]*\"[^\"]*\")*[^\"]*$)");
                 System.out.println(userCommand);
-
-                if (splitCommand[0].equals("register")) {
+                if (splitCommand[0].equals("quit") || splitCommand[0].equals("exit")) {
+                    break;
+                } else if (splitCommand[0].equals("register")) {
 
                     answer.append(commandExecutor.executeOperation(new Register(new UserOperation(splitCommand))));
 
@@ -62,12 +70,11 @@ public class ClientHandler implements Runnable {
 
                         answer.append(messages.getString("loginSuccessful"));
 
-                    } else if (englishAnswer.contains("Wrong")){
+                    } else if (englishAnswer.contains("Wrong")) {
                         messages = ResourceBundle.getBundle(configFile);
 
                         answer.append(messages.getString("wrongInput"));
-                    }
-                    else{
+                    } else {
                         answer.append(messages.getString("wrongSyntax")).append(" \"login <username> <password>\".");
                     }
 
@@ -76,7 +83,7 @@ public class ClientHandler implements Runnable {
                     answer.append(messages.getString("notLoggedIn"));
 
                 } else if (splitCommand[0].equals("add")) {
-                    if (splitCommand[1].equals("song")) {
+                    if (splitCommand.length >= 2 && splitCommand[1].equals("song")) {
                         if (splitCommand.length == 7) {
 
                             splitCommand[0] = String.valueOf(user.getId());
@@ -84,19 +91,21 @@ public class ClientHandler implements Runnable {
 
                         } else {
                             answer.append(messages.getString("wrongSyntax")).append(" \"add song <\"songName\"> <\"songDescription\"> <\"Artist1,Artist2,..\"> <\"genre1,genre2,..\"> <\"link\">\".");
-
+                            System.out.println(Arrays.toString(splitCommand));
                         }
-                    } else if (splitCommand[1].equals("comment")) {
+                    } else if (splitCommand.length > 2 && splitCommand[1].equals("comment")) {
                         splitCommand[0] = user.getUsername();
                         answer.append(commandExecutor.executeOperation(new AddComment(new UserOperation(splitCommand))));
+                    } else {
+                        answer.append(messages.getString("wrongSyntax")).append(" \"add comment <id_song> <\"comment\">.");
                     }
                 } else if (splitCommand[0].equals("top")) {
 
-                    if (splitCommand[1].equals("general")) {
+                    if (splitCommand.length == 2 && splitCommand[1].equals("general")) {
 
                         answer.append(commandExecutor.executeOperation(new TopGeneral(new UserOperation(splitCommand))));
 
-                    } else if (splitCommand[1].equals("for")) {
+                    } else if (splitCommand.length > 2 && splitCommand[1].equals("for")) {
 
                         answer.append(commandExecutor.executeOperation(new TopForGenre(new UserOperation(splitCommand))));
                     } else {
@@ -107,17 +116,21 @@ public class ClientHandler implements Runnable {
 
                     answer.append(commandExecutor.executeOperation((new GetComments(new UserOperation(splitCommand)))));
 
+                } else if (splitCommand[0].equals("logout")) {
+                    answer.append(messages.getString("logout"));
+                    loggedIn = false;
+                    user = null;
                 } else if (!user.getAdmin().equals(0)) {
                     if (splitCommand[0].equals("restrict")) {
-                        if (splitCommand[1].equals("votes")) {
+                        if (splitCommand.length > 2 && splitCommand[1].equals("votes")) {
 
                             answer.append(commandExecutor.executeOperation(new RestrictVote(new AdminOperation(splitCommand))));
 
-                        } else if (splitCommand[1].equals("comments")) {
+                        } else if (splitCommand.length > 2 && splitCommand[1].equals("comments")) {
 
                             answer.append(commandExecutor.executeOperation(new RestrictComment(new AdminOperation(splitCommand))));
 
-                        } else if (splitCommand[1].equals("songAdd")) {
+                        } else if (splitCommand.length > 2 && splitCommand[1].equals("songAdd")) {
 
                             answer.append(commandExecutor.executeOperation(new RestrictSongAdd(new AdminOperation(splitCommand))));
 
@@ -130,13 +143,19 @@ public class ClientHandler implements Runnable {
                         } else if (splitCommand[1].equals("comment")) {
                             answer.append(commandExecutor.executeOperation(new DeleteComment(new AdminOperation(splitCommand))));
                         }
+                    } else {
+                        answer.append(messages.getString("unknownCommand"));
                     }
+                } else if (adminCommands.contains(splitCommand[0])) {
+                    answer.append(messages.getString("notAdmin"));
+                } else {
+                    answer.append(messages.getString("unknownCommand"));
                 }
 
                 msgToClient.println(answer);
                 msgToClient.flush();
                 answer.delete(0, answer.length());
-            } while (!splitCommand[0].equals("exit"));
+            } while (!splitCommand[0].equals("quit"));
 
         } catch (IOException e) {
             e.printStackTrace();

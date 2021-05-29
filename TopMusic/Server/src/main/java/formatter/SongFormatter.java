@@ -40,6 +40,7 @@ public class SongFormatter {
 
             output.append(messages.getString("addedBy")).append(": ").append(song.getAddedBy()).append("/LNSEP/");
             output.append(messages.getString("link")).append(": ").append(song.getLink()).append("/LNSEP/");
+            output.append("/LNSEP/");
 
         }
 

@@ -24,6 +24,11 @@ public class SongFormatter {
                     output.append(artist.getName()).append("/LNSEP/");
                 spaces++;
             }
+
+            if (spaces == 1) {
+                output.append("/LNSEP/");
+            }
+
             output.append(messages.getString("description")).append(": ").append(song.getDescription()).append("/LNSEP/");
             output.append(messages.getString("votes")).append(": ").append(song.getVotes()).append("/LNSEP/");
             output.append(messages.getString("genres")).append(": ");
@@ -37,6 +42,9 @@ public class SongFormatter {
                 spaces++;
             }
 
+            if (spaces == 1) {
+                output.append("/LNSEP/");
+            }
 
             output.append(messages.getString("addedBy")).append(": ").append(song.getAddedBy()).append("/LNSEP/");
             output.append(messages.getString("link")).append(": ").append(song.getLink()).append("/LNSEP/");

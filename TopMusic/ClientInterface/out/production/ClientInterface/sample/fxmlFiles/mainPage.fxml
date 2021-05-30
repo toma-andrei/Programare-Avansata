@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <Button fx:id="loginButtonMain" layoutX="128.0" layoutY="187.0" mnemonicParsing="false" onMouseClicked="#loginButtonMainPressed" prefHeight="26.0" prefWidth="100.0" text="LOGIN" />
+      <Button fx:id="registerButtonMain" layoutX="384.0" layoutY="187.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="REGISTER" />
+      <Label contentDisplay="TOP" layoutX="173.0" layoutY="62.0" prefHeight="35.0" prefWidth="254.0" text="Top Music" textAlignment="RIGHT" textOverrun="WORD_ELLIPSIS">
+         <font>
+            <Font name="High Tower Text" size="55.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

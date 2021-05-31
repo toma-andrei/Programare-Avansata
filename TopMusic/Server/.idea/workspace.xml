@@ -5,14 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5b4320b8-b71e-43ca-bb0e-1c13634cac28" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../ClientInterface/.idea/libraries/lib.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ClientInterface/src/sample/fxmlFiles/sample.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ClientInterface/ClientInterface.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientInterface/ClientInterface.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/commands/userCommands/Vote.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/out/production/Client/client/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/out/production/Client/client/Client.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/client/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientInterface/out/production/ClientInterface/sample/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientInterface/out/production/ClientInterface/sample/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientInterface/out/production/ClientInterface/sample/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientInterface/out/production/ClientInterface/sample/MainController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientInterface/out/production/ClientInterface/sample/fxmlFiles/loginPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientInterface/out/production/ClientInterface/sample/fxmlFiles/loginPage.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientInterface/out/production/ClientInterface/sample/fxmlFiles/mainLoggedInPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientInterface/out/production/ClientInterface/sample/fxmlFiles/mainLoggedInPage.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientInterface/out/production/ClientInterface/sample/fxmlFiles/sample.fxml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../ClientInterface/src/sample/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientInterface/src/sample/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ClientInterface/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientInterface/src/sample/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ClientInterface/src/sample/sample.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientInterface/src/sample/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientInterface/src/sample/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientInterface/src/sample/fxmlFiles/loginPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientInterface/src/sample/fxmlFiles/loginPage.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientInterface/src/sample/fxmlFiles/mainLoggedInPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientInterface/src/sample/fxmlFiles/mainLoggedInPage.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientInterface/src/sample/fxmlFiles/mainPage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../ClientInterface/src/sample/fxmlFiles/mainPage.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ClientInterface/src/sample/fxmlFiles/sample.fxml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/formatter/SongFormatter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/formatter/SongFormatter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/commands/userCommands/UserOperation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/commands/userCommands/UserOperation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/daoClasses/CommentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daoClasses/CommentDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/daoClasses/SongDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/daoClasses/SongDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/res/Messages.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/res/Messages.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/res/Messages_ro.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/res/Messages_ro.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/res/Messages.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/res/Messages.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/res/Messages_ro.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/res/Messages_ro.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

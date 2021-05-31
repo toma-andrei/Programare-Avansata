@@ -13,19 +13,20 @@ public class Client {
     /**
      * Commands be like:
      * <p>
-     * register username password                                                           DONE
-     * login username password                                                              DONE
-     * add song "songName" "songDescription" "Artist1,Artist2" "genre1,genre2" "link"       DONE
-     * add comment idSong "comment"                                                         DONE
-     * top general                                                                          DONE
-     * top for "genre"                                                                      DONE
-     * comments for songId                                                                  DONE
+     *** register username password                                                           DONE
+     *** login username password                                                              DONE
+     *** add song "songName" "songDescription" "Artist1,Artist2" "genre1,genre2" "link"       DONE
+     *** add comment idSong "comment"                                                         DONE
+     *** top general                                                                          DONE
+     *** top for "genre"                                                                      DONE
+     *** comments for songId                                                                  DONE
+     *** vote songId                                                                          DONE
      * ***  ADMIN   ***
      * restrict vote for userId                                                             DONE
-     * restrict comment for userId                                                          DONE
+     * restrict comments for userId                                                          DONE
      * restrict songAdd for userId                                                          DONE
-     * delete song songId                                                                   DONE
-     * delete comment commentId                                                             DONE
+     *** delete song songId                                                                   DONE
+     *** delete comment commentId                                                             DONE
      */
 
     public static void main(String[] args) {

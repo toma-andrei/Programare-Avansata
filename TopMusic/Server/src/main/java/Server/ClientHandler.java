@@ -37,10 +37,6 @@ public class ClientHandler implements Runnable {
             adminCommands.add("delete");
             adminCommands.add("addAdmin");
 
-            if (loggedIn) {
-                messages = ResourceBundle.getBundle(configFile);
-            }
-
             String userCommand = "";
             String[] splitCommand;
             StringBuilder answer = new StringBuilder("");
@@ -52,6 +48,11 @@ public class ClientHandler implements Runnable {
                 userCommand = clientInput.readLine();
                 splitCommand = userCommand.split(" (?=([^\"]*\"[^\"]*\")*[^\"]*$)");
                 System.out.println(userCommand);
+
+                if (loggedIn) {
+                    System.out.println(user.getUsername());
+                    user = userRepo.findById(user.getId());
+                }
                 if (splitCommand[0].equals("quit") || splitCommand[0].equals("exit")) {
                     break;
                 } else if (splitCommand[0].equals("register")) {
@@ -85,7 +86,9 @@ public class ClientHandler implements Runnable {
 
                 } else if (splitCommand[0].equals("add")) {
                     if (splitCommand.length >= 2 && splitCommand[1].equals("song")) {
-                        if (splitCommand.length == 7) {
+                        if (user.getAddSong().equals(0)) {
+                            answer.append(messages.getString("notAllowedToAddSong"));
+                        } else if (splitCommand.length == 7) {
 
                             splitCommand[0] = String.valueOf(user.getId());
                             answer.append(commandExecutor.executeOperation(new AddSong(new UserOperation(splitCommand))));
@@ -95,11 +98,22 @@ public class ClientHandler implements Runnable {
                             System.out.println(Arrays.toString(splitCommand));
                         }
                     } else if (splitCommand.length > 2 && splitCommand[1].equals("comment")) {
-                        splitCommand[0] = user.getUsername();
-                        answer.append(commandExecutor.executeOperation(new AddComment(new UserOperation(splitCommand))));
+                        if (user.getAddComment().equals(0)) {
+                            answer.append(messages.getString("notAllowedToComment"));
+                        } else {
+                            splitCommand[0] = user.getUsername();
+                            answer.append(commandExecutor.executeOperation(new AddComment(new UserOperation(splitCommand))));
+                        }
                     } else {
                         answer.append(messages.getString("wrongSyntax")).append(" \"add comment <id_song> <\"comment\">.");
                     }
+                } else if (splitCommand[0].equals("vote")) {
+                    if (user.getVote().equals(0)) {
+                        answer.append(messages.getString("notAllowedToVote"));
+                    } else {
+                        answer.append(commandExecutor.executeOperation(new Vote(new UserOperation(splitCommand))));
+                    }
+
                 } else if (splitCommand[0].equals("top")) {
 
                     if (splitCommand.length == 2 && splitCommand[1].equals("general")) {
@@ -154,7 +168,10 @@ public class ClientHandler implements Runnable {
                 } else {
                     answer.append(messages.getString("unknownCommand"));
                 }
-
+                if (splitCommand[0].equals("quit")) {
+                    answer = new StringBuilder("");
+                    answer.append("quiting...");
+                }
                 msgToClient.println(answer);
                 msgToClient.flush();
                 answer.delete(0, answer.length());

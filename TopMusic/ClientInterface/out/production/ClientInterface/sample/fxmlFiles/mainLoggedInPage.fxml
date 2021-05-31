@@ -6,13 +6,52 @@
 
 <AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MainController">
    <children>
-      <Label layoutX="24.0" layoutY="27.0" />
+      <Label fx:id="serverResponse" layoutX="19.0" layoutY="264.0" prefHeight="26.0" prefWidth="759.0">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
       <Button fx:id="topGeneralButton" layoutX="24.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#topGeneral" text="Top general" />
-      <TextArea fx:id="textArea" editable="false" layoutX="51.0" layoutY="179.0" prefHeight="523.0" prefWidth="698.0">
+      <TextArea fx:id="textArea" editable="false" layoutX="51.0" layoutY="300.0" prefHeight="469.0" prefWidth="698.0">
          <font>
             <Font name="Source Code Pro" size="15.0" />
          </font></TextArea>
       <Button fx:id="topForGenreButton" layoutX="134.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#topForGenre" text="Top for" />
-      <TextField fx:id="topForGenreText" layoutX="203.0" layoutY="23.0" prefHeight="26.0" prefWidth="96.0" promptText="genre" />
+      <TextField fx:id="topForGenreText" layoutX="196.0" layoutY="23.0" prefHeight="26.0" prefWidth="96.0" promptText="genre" />
+      <Button fx:id="addSongButton" layoutX="24.0" layoutY="64.0" mnemonicParsing="false" onMouseClicked="#addSong" text="add song" />
+      <TextField fx:id="addSongName" layoutX="100.0" layoutY="64.0" prefHeight="26.0" prefWidth="118.0" promptText="song name" />
+      <TextField fx:id="addSongDescription" layoutX="226.0" layoutY="64.0" prefHeight="26.0" prefWidth="118.0" promptText="song description" />
+      <TextField fx:id="addSongArtists" layoutX="353.0" layoutY="64.0" prefHeight="26.0" prefWidth="118.0" promptText="artists" />
+      <TextField fx:id="addSongGenres" layoutX="480.0" layoutY="64.0" prefHeight="26.0" prefWidth="118.0" promptText="genres" />
+      <TextField fx:id="addSongLink" layoutX="611.0" layoutY="64.0" prefHeight="26.0" prefWidth="174.0" promptText="link" />
+      <Button fx:id="voteButton" layoutX="327.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#voteSong" text="Vote" />
+      <TextField fx:id="voteText" layoutX="375.0" layoutY="23.0" prefHeight="26.0" prefWidth="96.0" promptText="song id" />
+      <Button fx:id="logoutButton" layoutX="716.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#logout" text="LOG OUT" textFill="#cf0000" />
+      <TextField fx:id="commentsForSongId" layoutX="598.0" layoutY="23.0" prefHeight="26.0" prefWidth="96.0" promptText="song id" />
+      <Button fx:id="commentsForButton" layoutX="499.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#getComments" text="Comments for" />
+      <Button fx:id="addCommentButton" layoutX="25.0" layoutY="104.0" mnemonicParsing="false" onMouseClicked="#addComment" text="add comment" />
+      <TextField fx:id="addCommentSongId" layoutX="126.0" layoutY="103.0" prefHeight="26.0" prefWidth="96.0" promptText="song id" />
+      <TextField fx:id="addCommentText" layoutX="232.0" layoutY="104.0" prefHeight="26.0" prefWidth="245.0" promptText="comment" />
+      <Separator prefWidth="200.0" />
+      <Separator layoutX="64.0" layoutY="138.0" prefHeight="3.0" prefWidth="670.0" />
+      <Label layoutX="344.0" layoutY="140.0" text="ADMIN COMMANDS" />
+      <Button fx:id="deleteSongButton" layoutX="25.0" layoutY="164.0" mnemonicParsing="false" onMouseClicked="#deleteSong" text="delete song" />
+      <TextField fx:id="deleteSongId" layoutX="111.0" layoutY="164.0" prefHeight="26.0" prefWidth="96.0" promptText="song id" />
+      <Button fx:id="deleteCommentButton" layoutX="240.0" layoutY="164.0" mnemonicParsing="false" onMouseClicked="#deleteComment" text="delete comment" />
+      <TextField fx:id="deleteCommentId" layoutX="353.0" layoutY="164.0" prefHeight="26.0" prefWidth="92.0" promptText="comment id" />
+      <Button fx:id="restrictVoteButton" layoutX="26.0" layoutY="204.0" mnemonicParsing="false" onMouseClicked="#restrictVote" text="restrict vote for" />
+      <TextField fx:id="restrictVoteUserId" layoutX="133.0" layoutY="204.0" prefHeight="26.0" prefWidth="103.0" promptText="user id" />
+      <Button fx:id="restrictCommentsButton" layoutX="477.0" layoutY="164.0" mnemonicParsing="false" onMouseClicked="#restrictComments" text="restrict comment for" />
+      <TextField fx:id="restrictCommentsUserId" layoutX="611.0" layoutY="165.0" prefHeight="26.0" prefWidth="103.0" promptText="user id" />
+      <Button fx:id="restrictSongAddButton" layoutX="264.0" layoutY="204.0" mnemonicParsing="false" onMouseClicked="#restrictSongAdd" text="restrict song addition for" />
+      <TextField fx:id="restrictSongAddUserId" layoutX="419.0" layoutY="204.0" prefHeight="26.0" prefWidth="103.0" promptText="user id" />
+      <Separator layoutX="8.0" layoutY="89.0" prefHeight="3.0" prefWidth="786.0" />
+      <Separator layoutX="126.0" layoutY="48.0" prefHeight="3.0" prefWidth="174.0" />
+      <Separator layoutX="321.0" layoutY="48.0" prefHeight="3.0" prefWidth="160.0" />
+      <Separator layoutX="491.0" layoutY="47.0" prefHeight="3.0" prefWidth="214.0" />
+      <Separator layoutX="15.0" layoutY="190.0" prefWidth="200.0" />
+      <Separator layoutX="232.0" layoutY="190.0" prefHeight="3.0" prefWidth="222.0" />
+      <Separator layoutX="471.0" layoutY="188.0" prefHeight="3.0" prefWidth="246.0" />
+      <Separator layoutX="14.0" layoutY="229.0" prefHeight="3.0" prefWidth="230.0" />
+      <Separator layoutX="255.0" layoutY="228.0" prefHeight="3.0" prefWidth="275.0" />
    </children>
 </AnchorPane>

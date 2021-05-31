@@ -81,10 +81,27 @@ public class Controller implements Initializable {
             stage.setTitle("Login");
             stage.setScene(scene);
             stage.show();
-            ((Node)(event.getSource())).getScene().getWindow().hide();
+            ((Node) (event.getSource())).getScene().getWindow().hide();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void registerButtonMainPressed(Event event) {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("fxmlFiles/registerPage.fxml"));
+
+        try {
+            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+            Stage stage = new Stage();
+            stage.setTitle("Register");
+            stage.setScene(scene);
+            stage.show();
+            ((Node) (event.getSource())).getScene().getWindow().hide();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static String writeToServer() {
@@ -92,7 +109,7 @@ public class Controller implements Initializable {
         for (String comm : inputFromUser.getCommand()) {
             command.append(comm).append(" ");
         }
-
+        System.out.println(command);
         msgToServer.println(command);
         String answer = "";
         try {
@@ -106,7 +123,7 @@ public class Controller implements Initializable {
         return answer;
     }
 
-    public static void changeToLoggedInMain(){
+    public static void changeToLoggedInMain() {
 
 
         FXMLLoader fxmlLoader = new FXMLLoader();

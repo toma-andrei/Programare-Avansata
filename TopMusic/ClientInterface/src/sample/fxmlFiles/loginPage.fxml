@@ -6,27 +6,24 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginController">
    <children>
-      <PasswordField fx:id="password" layoutX="244.0" layoutY="190.0" prefHeight="40.0" prefWidth="200.0" />
-      <Label layoutX="142.0" layoutY="131.0" text="username">
+      <PasswordField fx:id="password" layoutX="300.0" layoutY="280.0" prefHeight="40.0" prefWidth="200.0" promptText="password" />
+      <Label layoutX="204.0" layoutY="224.0" text="username">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="143.0" layoutY="196.0" text="password">
+      <Label layoutX="205.0" layoutY="286.0" text="password">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="submitButton" layoutX="318.0" layoutY="265.0" mnemonicParsing="false" onMouseClicked="#submitButtonPressed" text="Submit" />
-      <Label layoutX="243.0" layoutY="44.0" text="LOGIN">
+      <Button fx:id="submitButton" layoutX="373.0" layoutY="344.0" mnemonicParsing="false" onMouseClicked="#submitButtonPressed" text="Submit" />
+      <Label layoutX="343.0" layoutY="141.0" text="LOGIN">
          <font>
             <Font name="High Tower Text" size="33.0" />
          </font>
       </Label>
-      <Label fx:id="inputResult" layoutX="400.0" layoutY="258.0" prefHeight="198.0" prefWidth="279.0" textFill="#fd0303">
-         <font>
-            <Font size="18.0" />
-         </font></Label>
-      <TextField fx:id="username" layoutX="245.0" layoutY="125.0" prefHeight="40.0" prefWidth="200.0" />
+      <TextField fx:id="username" layoutX="300.0" layoutY="218.0" prefHeight="40.0" prefWidth="200.0" promptText="username" />
+      <Label fx:id="inputResult" layoutX="84.0" layoutY="392.0" prefHeight="34.0" prefWidth="612.0" />
    </children>
 </AnchorPane>

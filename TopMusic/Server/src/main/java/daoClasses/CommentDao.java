@@ -53,12 +53,9 @@ public class CommentDao {
 
         String sql = "Select * from comments where id_song = ?";
 
-        String commentWriter = "Select username from users u inner join songs s on s.addedBy = u.id where s.id = ?";
-
         PreparedStatement stmt;
 
         ResultSet comments;
-        ResultSet usernameSet;
         try {
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, id);
@@ -70,16 +67,10 @@ public class CommentDao {
                 String username;
                 Comment comment = new Comment();
 
-                stmt = conn.prepareStatement(commentWriter);
-                stmt.setString(1, id);
-                usernameSet = stmt.executeQuery();
-                usernameSet.next();
-
-                username = usernameSet.getString("username");
                 comment.setSongId(comments.getInt("id_song"));
                 comment.setId(comments.getInt("id"));
 
-                comment.setUsername(username);
+                comment.setUsername(comments.getString("username"));
                 comment.setComment(comments.getString("comment"));
                 commentList.add(comment);
             }

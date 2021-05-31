@@ -97,7 +97,7 @@ public class SongDao {
             e.printStackTrace();
         }
 
-        String sqlForSongs = "SELECT * FROM songs s ORDER BY votes";
+        String sqlForSongs = "SELECT * FROM songs s ORDER BY votes DESC";
 
         List<Song> songList = new ArrayList<>();
 
@@ -141,7 +141,7 @@ public class SongDao {
             e.printStackTrace();
         }
 
-        String sqlForSongs = "SELECT * FROM songs s inner join genres g on s.id=g.id_song where g.name=? ORDER BY votes";
+        String sqlForSongs = "SELECT * FROM songs s inner join genres g on s.id=g.id_song where g.name=? ORDER BY votes DESC";
         List<Song> songList = new ArrayList<>();
 
         PreparedStatement stmtForSongs;
@@ -201,6 +201,27 @@ public class SongDao {
         }
 
         return song;
+    }
+
+    public synchronized boolean vote(String id) {
+        try {
+            conn = DatabaseConnection.getInstance().getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String sql = "Update songs set votes = votes+1 where id = ?";
+        PreparedStatement stmt;
+
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, id);
+            stmt.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public synchronized boolean deleteSong(String id) {

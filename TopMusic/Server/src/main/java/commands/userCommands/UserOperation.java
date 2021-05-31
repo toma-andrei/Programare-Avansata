@@ -11,6 +11,7 @@ import Server.SetLocale;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -155,6 +156,22 @@ public class UserOperation {
         return songFormatter.format(songList, messages).toString();
     }
 
+    public String vote() {
+        String configFile = "res.Messages";
+        ResourceBundle messages = ResourceBundle.getBundle(configFile);
+        if (splitCommand.length != 2)
+            return messages.getString("wrongSyntax") + " \"vote <song_id>\".";
+
+        SongDao songDao = new SongDao();
+        if (songDao.vote(splitCommand[1])) {
+            String pattern = messages.getString("voteAdded");
+            Object[] arguments = {songDao.findById(splitCommand[1]).getName()};
+            return new MessageFormat(pattern).format(arguments);
+        } else {
+            return messages.getString("voteNotAdded");
+        }
+    }
+
     private String generateHashedPassword(String cleanPassword) {
         MessageDigest md = null;
         try {
@@ -172,4 +189,6 @@ public class UserOperation {
         }
         return hashedPassword;
     }
+
+
 }

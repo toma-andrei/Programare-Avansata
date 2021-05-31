@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.RegisterController">
+   <children>
+      <Label layoutX="316.0" layoutY="129.0" prefHeight="40.0" prefWidth="169.0" text="REGISTER">
+         <font>
+            <Font name="High Tower Text" size="33.0" />
+         </font>
+      </Label>
+      <TextField fx:id="usernameText" layoutX="305.0" layoutY="179.0" prefHeight="40.0" prefWidth="190.0" promptText="username" />
+      <PasswordField fx:id="passwordText" layoutX="305.0" layoutY="232.0" prefHeight="40.0" prefWidth="190.0" promptText="password" />
+      <CheckBox fx:id="usCheck" layoutX="353.0" layoutY="291.0" mnemonicParsing="false" text="United States" />
+      <CheckBox fx:id="roCheck" layoutX="353.0" layoutY="316.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="94.0" text="România" />
+      <Button layoutX="374.0" layoutY="352.0" mnemonicParsing="false" onMouseClicked="#submitButtonPressed" text="Submit" />
+      <Label layoutX="212.0" layoutY="185.0" text="username">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="213.0" layoutY="238.0" text="password">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="serverResponse" layoutX="25.0" layoutY="396.0" prefHeight="40.0" prefWidth="751.0" textFill="RED">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Label layoutX="221.0" layoutY="302.0" text="country">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

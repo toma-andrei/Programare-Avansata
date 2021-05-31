@@ -7,4 +7,14 @@ Serverul permite 14 operatiuni ce pot fi executate de clienti (înregistrare, lo
       vizualizarea topului general, a topului în funcție de un anumit gen muzical si a comentariilor unei anumite melodii, 
       (pentru admini) ștergerea unei melodii/comentariu, restricționarea de a vota/comenta/adăuga melodii).
 Accesul la baza de date se face folosind JPA (orice operatie ce include acces la tabela pentru utilizatori) si JDBC pentru orice alta operație.
-Când un client se înregistrează este obligat să aleagă țara iar in functie de țară conținutul primit de la aplicație va fi în limba acelei țări. 
+Când un client se înregistrează este obligat să aleagă țara iar in functie de țară conținutul primit de la aplicație va fi în limba acelei țări 
+(internaționalizare - valabil in română și engleză).
+Clienții pot comunica cu serverul fie de la linia de comanda fie prin interfața creeata cu JavaFX.
+
+tehnologii folosite:
+- Java Networking
+- Java Thread Pool
+- JPA
+- JDBC
+- JavaFX
+- Internaționalizare / Localizare (Română, Engleză)

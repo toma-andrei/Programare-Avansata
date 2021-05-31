@@ -41,13 +41,13 @@
       <Button fx:id="restrictVoteButton" layoutX="26.0" layoutY="204.0" mnemonicParsing="false" onMouseClicked="#restrictVote" text="restrict vote for" />
       <TextField fx:id="restrictVoteUserId" layoutX="133.0" layoutY="204.0" prefHeight="26.0" prefWidth="103.0" promptText="user id" />
       <Button fx:id="restrictCommentsButton" layoutX="477.0" layoutY="164.0" mnemonicParsing="false" onMouseClicked="#restrictComments" text="restrict comment for" />
-      <TextField fx:id="restrictCommentsUserId" layoutX="611.0" layoutY="165.0" prefHeight="26.0" prefWidth="103.0" promptText="user id" />
+      <TextField fx:id="restrictCommentsUserId" layoutX="611.0" layoutY="163.0" prefHeight="26.0" prefWidth="103.0" promptText="user id" />
       <Button fx:id="restrictSongAddButton" layoutX="264.0" layoutY="204.0" mnemonicParsing="false" onMouseClicked="#restrictSongAdd" text="restrict song addition for" />
-      <TextField fx:id="restrictSongAddUserId" layoutX="419.0" layoutY="204.0" prefHeight="26.0" prefWidth="103.0" promptText="user id" />
+      <TextField fx:id="restrictSongAddUserId" layoutX="419.0" layoutY="203.0" prefHeight="26.0" prefWidth="103.0" promptText="user id" />
       <Separator layoutX="8.0" layoutY="89.0" prefHeight="3.0" prefWidth="786.0" />
       <Separator layoutX="126.0" layoutY="48.0" prefHeight="3.0" prefWidth="174.0" />
       <Separator layoutX="321.0" layoutY="48.0" prefHeight="3.0" prefWidth="160.0" />
-      <Separator layoutX="491.0" layoutY="47.0" prefHeight="3.0" prefWidth="214.0" />
+      <Separator layoutX="491.0" layoutY="48.0" prefHeight="3.0" prefWidth="214.0" />
       <Separator layoutX="15.0" layoutY="190.0" prefWidth="200.0" />
       <Separator layoutX="232.0" layoutY="190.0" prefHeight="3.0" prefWidth="222.0" />
       <Separator layoutX="471.0" layoutY="188.0" prefHeight="3.0" prefWidth="246.0" />

@@ -2,14 +2,16 @@ Proiect realizat de Toma Andrei 2B3
 
 Top Music este o aplicație client-server ce permite administrarea unui top muzical.
 Serverul este concurent folosind ThreadPoolExecutor, permițând până la 100 de utilizatori simultan (se vor crea noi threaduri cand cele 100 de 
-      threaduri vor fi ocupate, astfel niciun client nu va astepta eliberarea threadPool-ului).
+      threaduri vor fi ocupate, astfel niciun client nu va astepta eliberarea threadPool-ului). Am folosit un pool de threaduri deoarece crearea
+      unui thread este un proces costisitor iar prin această metodă threadurile ramân deschise, fară a mai fi nevoie de redeschiderea lor când sunt
+      puse in folosință.
 Serverul permite 14 operatiuni ce pot fi executate de clienti (înregistrare, logare, adaugare de melodii și commentarii, votarea de melodii,
       vizualizarea topului general, a topului în funcție de un anumit gen muzical si a comentariilor unei anumite melodii, 
       (pentru admini) ștergerea unei melodii/comentariu, restricționarea de a vota/comenta/adăuga melodii).
 Accesul la baza de date se face folosind JPA (orice operatie ce include acces la tabela pentru utilizatori) si JDBC pentru orice alta operație.
 Când un client se înregistrează este obligat să aleagă țara iar in functie de țară conținutul primit de la aplicație va fi în limba acelei țări 
 (internaționalizare - valabil in română și engleză).
-Clienții pot comunica cu serverul fie de la linia de comanda fie prin interfața creeata cu JavaFX.
+Clienții pot comunica cu serverul fie de la linia de comandă fie prin interfața creată cu JavaFX.
 
 tehnologii folosite:
 - Java Networking
